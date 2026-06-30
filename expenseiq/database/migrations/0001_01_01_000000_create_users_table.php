@@ -16,10 +16,12 @@ return new class extends Migration
 
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('nickname');
+            $table->string('nickname')->nullable();
 
             $table->string('email')->unique();
             $table->string('password');
+
+            $table->decimal('monthly_budget', 12, 2)->nullable();
 
             $table->rememberToken();
             $table->timestamps();

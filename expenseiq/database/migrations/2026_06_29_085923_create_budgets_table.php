@@ -18,6 +18,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->foreignId('category_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->tinyInteger('month');
             $table->smallInteger('year');
 

@@ -3,11 +3,20 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Livewire\LandingPage;
-use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
+use App\Http\Controllers\Auth\AuthController;
 
 Route::get('/', LandingPage::class)->name('landing');
 
-Route::get('/login', Login::class)->name('login');
+Route::middleware('guest')->group(function () {
 
-Route::get('/register', Register::class)->name('register');
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});

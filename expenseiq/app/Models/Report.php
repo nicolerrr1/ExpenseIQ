@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Report extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
         'month',
         'year',
+        'total_budget',
         'total_expense',
         'remaining_budget',
         'generated_at',
+    ];
+
+    protected $casts = [
+        'generated_at' => 'datetime',
     ];
 
     public function user()

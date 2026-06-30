@@ -19,9 +19,13 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->tinyInteger('month');
+
             $table->smallInteger('year');
 
+            $table->decimal('total_budget', 10, 2);
+
             $table->decimal('total_expense', 10, 2);
+
             $table->decimal('remaining_budget', 10, 2);
 
             $table->timestamp('generated_at');

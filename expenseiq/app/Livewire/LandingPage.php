@@ -10,32 +10,32 @@ class LandingPage extends Component
         [
             'title' => 'Expense Entry',
             'icon' => 'fa-receipt',
-            'description' => 'Quickly log any transaction with category, amount, date, and payment method.',
+            'description' => 'Quickly log every expense with categories, amount, and date.',
         ],
         [
-            'title' => 'Monthly Budgets',
+            'title' => 'Monthly Budget',
             'icon' => 'fa-wallet',
-            'description' => 'Set spending limits per category and get warned when you\'re running low.',
+            'description' => 'Set your monthly budget and monitor your remaining balance.',
         ],
         [
-            'title' => 'Budget Alerts',
+            'title' => 'Budget Alert',
             'icon' => 'fa-bell',
-            'description' => 'Receive instant warnings when you reach 80% and 100% of your budget limit.',
+            'description' => 'Receive alerts when you are close to reaching your budget.',
         ],
         [
-            'title' => 'Monthly Reports',
+            'title' => 'View Reports',
             'icon' => 'fa-chart-column',
-            'description' => 'View charts and summaries of your spending habits over time.',
+            'description' => 'Analyze your spending through charts and monthly summaries.',
         ],
         [
             'title' => 'Export Reports',
             'icon' => 'fa-file-export',
-            'description' => 'Download your reports as CSV or PDF anytime.',
+            'description' => 'Export your financial reports to CSV or PDF.',
         ],
         [
             'title' => 'User Accounts',
             'icon' => 'fa-user',
-            'description' => 'Secure your personal account with your own private data and preferences.',
+            'description' => 'Securely manage your profile and account information.',
         ],
     ];
 
