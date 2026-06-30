@@ -3,62 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - ExpenseIQ</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-100">
+    <title>Create Account | ExpenseIQ</title>
 
-    <div class="min-h-screen flex items-center justify-center bg-gray-100">
-        <div class="w-full max-w-md bg-white p-8 rounded-lg shadow">
-            <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
+    @vite(['resources/css/app.css','resources/js/app.js'])
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-[#FFF8E8]">
+
+<div class="min-h-screen flex items-center justify-center px-6 py-10">
+
+    <div class="w-full max-w-7xl grid lg:grid-cols-2 gap-20 items-center">
+
+        <!-- LEFT -->
+
+        <div class="hidden lg:block">
+
+            <div class="flex items-center gap-4 mb-10">
+
+                <div class="w-14 h-14 rounded-2xl bg-[#B88900] flex items-center justify-center">
+
+                    <i class="fa-solid fa-wallet text-white text-2xl"></i>
+
+                </div>
+
+                <h1 class="text-4xl font-bold">
+                    ExpenseIQ
+                </h1>
+
+            </div>
+
+            <h2 class="text-6xl font-extrabold text-[#5B4300] leading-tight">
+
+                Start tracking your
+                <br>
+                money today.
+
+            </h2>
+
+            <p class="mt-8 text-lg text-gray-600 leading-8 max-w-lg">
+
+                Create your ExpenseIQ account and start managing your expenses,
+                monthly budget, and financial reports with ease.
+
+            </p>
+
+            <div class="mt-12 space-y-5">
+
+                <div class="flex items-center gap-4">
+
+                    <i class="fa-solid fa-circle-check text-yellow-600 text-xl"></i>
+
+                    <span>Free account — no credit card needed</span>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                    <i class="fa-solid fa-circle-check text-yellow-600 text-xl"></i>
+
+                    <span>Set budget per category</span>
+
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                    <i class="fa-solid fa-circle-check text-yellow-600 text-xl"></i>
+
+                    <span>Export your data anytime</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="bg-white rounded-3xl shadow-xl p-10">
+
+            <h2 class="text-3xl font-bold text-center text-[#5B4300]">
+
+                Create Account
+
+            </h2>
+
+            <p class="text-center text-gray-500 mt-2 mb-8">
+
+                Fill in the information below.
+
+            </p>
 
             @if ($errors->any())
-                <div class="mb-4 text-sm text-red-600">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
+
+                <div class="mb-6 rounded-lg bg-red-50 border border-red-300 p-4">
+
+                    <ul class="text-sm text-red-600 list-disc ml-5">
+
+                        @foreach ($errors->all() as $error)
+
+                            <li>{{ $error }}</li>
+
+                        @endforeach
+
+                    </ul>
+
                 </div>
+
             @endif
 
-            <form method="POST" action="{{ route('register.submit') }}">
+            <form action="{{ route('register.store') }}" method="POST">
+
                 @csrf
 
-                <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input id="name" type="text" name="name" value="{{ old('name') }}"
-                           class="mt-1 block w-full rounded border-gray-300" required autofocus>
+                <div class="grid grid-cols-2 gap-5">
+
+                    <div>
+
+                        <label class="font-medium text-sm">
+                            FIRST NAME
+                        </label>
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            value="{{ old('first_name') }}"
+                            class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            required>
+
+                    </div>
+
+                    <div>
+
+                        <label class="font-medium text-sm">
+                            LAST NAME
+                        </label>
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            value="{{ old('last_name') }}"
+                            class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            required>
+
+                    </div>
+
                 </div>
 
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}"
-                           class="mt-1 block w-full rounded border-gray-300" required>
+                <div class="mt-5">
+
+                    <label class="font-medium text-sm">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                        required>
+
                 </div>
 
-                <div class="mb-4">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input id="password" type="password" name="password"
-                           class="mt-1 block w-full rounded border-gray-300" required>
+                <div class="mt-5">
+
+                    <label class="font-medium text-sm">
+                        PASSWORD
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                        required>
+
                 </div>
 
-                <div class="mb-4">
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                    <input id="password_confirmation" type="password" name="password_confirmation"
-                           class="mt-1 block w-full rounded border-gray-300" required>
+                <div class="mt-5">
+
+                    <label class="font-medium text-sm">
+                        CONFIRM PASSWORD
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                        required>
+
                 </div>
 
-                <button type="submit"
-                        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
-                    Register
+                <div class="mt-5">
+
+                    <label class="font-medium text-sm">
+                        SET MONTHLY BUDGET (₱)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="monthly_budget"
+                        value="{{ old('monthly_budget') }}"
+                        min="1"
+                        step="0.01"
+                        class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
+                        required>
+
+                </div>
+
+                <div class="flex items-start mt-6">
+
+                    <input
+                        type="checkbox"
+                        name="terms"
+                        value="1"
+                        class="mt-1">
+
+                    <label class="ml-3 text-sm text-gray-600">
+
+                        I agree to the
+                        <span class="font-semibold">
+                            Terms of Service
+                        </span>
+                        and
+                        <span class="font-semibold">
+                            Privacy Policy
+                        </span>
+
+                    </label>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="mt-8 w-full bg-[#B88900] hover:bg-[#9E7600] transition text-white font-bold py-4 rounded-xl">
+
+                    CREATE ACCOUNT
+
                 </button>
+
             </form>
 
-            <p class="mt-4 text-sm text-center text-gray-600">
+            <p class="text-center mt-8 text-gray-600">
+
                 Already have an account?
-                <a href="{{ route('login') }}" class="text-indigo-600 hover:underline">Log in</a>
+
+                <a href="{{ route('login') }}"
+                   class="font-semibold text-[#B88900] hover:underline">
+
+                    Log In
+
+                </a>
+
             </p>
+
         </div>
+
     </div>
+
+</div>
 
 </body>
 </html>
