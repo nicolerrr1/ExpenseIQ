@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('expenses.index');
     }
 
     /**
@@ -63,8 +63,6 @@ class AuthController extends Controller
 
             'password' => 'required|confirmed|min:8',
 
-            'monthly_budget' => 'required|numeric|min:1',
-
             'terms' => 'accepted',
 
         ]);
@@ -82,15 +80,12 @@ class AuthController extends Controller
             // Auto-hashed dahil sa User model casts
             'password' => $validated['password'],
 
-            'monthly_budget' => $validated['monthly_budget'],
-
         ]);
 
         Auth::login($user);
 
         $request->session()->regenerate();
-
-        return redirect()->route('setup.nickname');
+        return redirect()->route('expenses.index');
     }
 
     /**

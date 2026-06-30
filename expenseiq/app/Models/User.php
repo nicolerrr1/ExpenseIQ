@@ -16,7 +16,6 @@ class User extends Authenticatable
         'nickname',
         'email',
         'password',
-        'monthly_budget',
     ];
 
     protected $hidden = [
@@ -36,7 +35,7 @@ class User extends Authenticatable
 
     public function budget()
     {
-        return $this->hasOne(Budget::class);
+        return $this->hasMany(Budget::class);
     }
 
     public function reports()

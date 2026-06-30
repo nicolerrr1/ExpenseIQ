@@ -15,6 +15,12 @@ class Expense extends Model
         'description',
         'amount',
         'expense_date',
+        'note',
+    ];
+
+    protected $casts = [
+    'expense_date' => 'date',
+    'amount' => 'decimal:2',
     ];
 
     public function user()
