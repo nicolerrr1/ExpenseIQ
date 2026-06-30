@@ -1,36 +1,13 @@
-<?php
+Schema::create('exports', function (Blueprint $table) {
+    $table->id();
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+    $table->foreignId('report_id')
+        ->constrained()
+        ->cascadeOnDelete();
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('exports', function (Blueprint $table) {
-            $table->id();
+    $table->enum('format', ['PDF', 'CSV']);
 
-            $table->foreignId('report_id')
-                ->constrained()
-                ->cascadeOnDelete();
+    $table->timestamp('exported_at');
 
-            $table->enum('format', ['PDF', 'CSV']);
-
-            $table->timestamp('exported_at');
-
-            $table->timestamps();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('exports');
-    }
-};
+    $table->timestamps();
+});

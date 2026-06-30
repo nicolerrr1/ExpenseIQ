@@ -22,9 +22,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('expense_name');
             $table->text('description')->nullable();
+
             $table->decimal('amount', 10, 2);
+
             $table->date('expense_date');
 
             $table->timestamps();

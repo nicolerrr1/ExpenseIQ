@@ -1,0 +1,28 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Category;
+
+class CategorySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $categories = [
+            ['category_name' => 'Housing'],
+            ['category_name' => 'Food and Drinks'],
+            ['category_name' => 'Grocery'],
+            ['category_name' => 'Transportation'],
+            ['category_name' => 'Health'],
+            ['category_name' => 'Entertainment'],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
+    }
+}
