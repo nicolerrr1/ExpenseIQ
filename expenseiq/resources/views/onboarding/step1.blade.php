@@ -1,109 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Welcome | ExpenseIQ</title>
 
     @vite(['resources/css/app.css','resources/js/app.js'])
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
-<body class="min-h-screen bg-[#FFF7F2] flex items-center justify-center p-8">
+<body class="bg-[#FFF8E8] flex items-center justify-center min-h-screen">
 
-<div class="w-full max-w-6xl bg-white rounded-[40px] shadow-xl overflow-hidden grid grid-cols-2">
+    <div class="w-full max-w-4xl">
 
-    <!-- LEFT -->
-    <div class="bg-[#F3C400] flex flex-col justify-center items-center p-12">
+        <div class="bg-white border-4 border-yellow-400 rounded-[45px] px-20 py-16">
 
-        {{-- Temporary illustration --}}
-        <img
-            src="{{ asset('images/welcome-1.png') }}"
-            onerror="this.style.display='none'"
-            class="w-80 mb-6"
-        >
+            <div class="flex justify-center">
 
-        <div class="text-7xl mb-5">👋</div>
+                <div class="w-24 h-24 rounded-[28px] bg-yellow-400 flex items-center justify-center">
 
-        <h2 class="text-4xl font-bold text-[#4D3900] text-center">
+                    <i class="fa-solid fa-user text-[#6A5200] text-5xl"></i>
 
-            Nice to meet you!
+                </div>
 
-        </h2>
+            </div>
 
-        <p class="text-[#5D4300] text-center mt-4 text-lg">
+            <p class="mt-8 text-center text-pink-600 font-bold text-2xl uppercase">
 
-            Let's personalize your ExpenseIQ experience.
-
-        </p>
-
-    </div>
-
-    <!-- RIGHT -->
-    <div class="flex items-center justify-center">
-
-        <form
-            action="{{ route('welcome.step1.save') }}"
-            method="POST"
-            class="w-full max-w-md"
-        >
-
-            @csrf
-
-            <h1 class="text-5xl font-extrabold text-[#4D3900] mb-4">
-
-                Welcome!
-
-            </h1>
-
-            <p class="text-gray-500 text-lg mb-10">
-
-                What should we call you?
+                Step 1 of 3 — Welcome
 
             </p>
 
-            <label class="block text-lg font-semibold mb-3">
+            <h1 class="mt-5 text-center text-[56px] font-black text-[#5B4300] leading-tight">
 
-                Nickname
+                What should we call you?
 
-            </label>
+            </h1>
 
-            <input
-                type="text"
-                name="nickname"
-                value="{{ old('nickname') }}"
-                placeholder="Enter your nickname"
-                class="w-full h-16 rounded-2xl border-2 border-gray-300 px-5 text-xl focus:outline-none focus:border-yellow-400"
-                required
-            >
+            <p class="mt-5 text-center text-[24px] text-[#B3A477] leading-relaxed max-w-3xl mx-auto">
 
-            @error('nickname')
+                This is the name that will appear on your dashboard and
+                notifications. You can always change it later in your account
+                settings.
 
-                <p class="text-red-500 mt-2">
+            </p>
 
-                    {{ $message }}
+            @if ($errors->any())
 
-                </p>
+                <div class="mt-10 rounded-xl bg-red-50 border border-red-300 p-4">
 
-            @enderror
+                    <p class="text-red-600">
 
-            <button
-                type="submit"
-                class="w-full mt-10 h-16 rounded-2xl bg-[#F3C400] hover:bg-yellow-500 text-[#4D3900] text-xl font-bold transition"
-            >
+                        {{ $errors->first() }}
 
-                Continue →
+                    </p>
 
-            </button>
+                </div>
 
-        </form>
+            @endif
+
+            <form
+                action="{{ route('welcome.step1.save') }}"
+                method="POST"
+                class="mt-12">
+
+                @csrf
+
+                <div>
+
+                    <label class="block text-[#5B4300] font-bold text-2xl mb-4">
+
+                        NICKNAME
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nickname"
+                        value="{{ old('nickname') }}"
+                        placeholder="e.g. Cole"
+                        maxlength="20"
+                        required
+
+                        class="w-full
+                        h-20
+                        rounded-2xl
+                        border
+                        border-gray-300
+                        px-6
+                        text-2xl
+                        outline-none
+                        focus:ring-2
+                        focus:ring-yellow-500">
+
+                </div>
+
+                <button
+                    type="submit"
+
+                    class="mt-10
+                    w-full
+                    h-20
+                    rounded-2xl
+                    border-2
+                    border-black
+                    bg-white
+                    text-[#5B4300]
+                    text-[34px]
+                    font-black
+                    transition
+                    hover:bg-yellow-100">
+
+                    Continue
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+
+                </button>
+
+            </form>
+
+            <p class="mt-10 text-center text-pink-600 text-2xl">
+
+                Account created • Step 1 of 3
+
+            </p>
+
+        </div>
 
     </div>
-
-</div>
 
 </body>
 </html>

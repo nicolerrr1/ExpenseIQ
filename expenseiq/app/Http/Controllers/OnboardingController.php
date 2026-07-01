@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Budget;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,27 +34,13 @@ class OnboardingController extends Controller
     public function saveStep2(Request $request)
     {
         $request->validate([
-            'budget' => 'required|numeric|min:0',
+            'budget' => 'required|numeric|min:1',
         ]);
 
-        $categories = Category::all();
+        $user = Auth::user();
 
-        $perCategory = $request->budget / max($categories->count(), 1);
-
-        foreach ($categories as $category) {
-
-            Budget::updateOrCreate(
-                [
-                    'user_id' => Auth::id(),
-                    'category_id' => $category->id,
-                    'month' => now()->month,
-                    'year' => now()->year,
-                ],
-                [
-                    'budget_amount' => $perCategory,
-                ]
-            );
-        }
+        $user->monthly_budget = $request->budget;
+        $user->save();
 
         return redirect()->route('welcome.step3');
     }

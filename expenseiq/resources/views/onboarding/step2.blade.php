@@ -1,103 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ExpenseIQ | Monthly Budget</title>
+    <title>Set Budget | ExpenseIQ</title>
 
     @vite(['resources/css/app.css','resources/js/app.js'])
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
-<body class="min-h-screen bg-[#FFF7F2] flex items-center justify-center p-8">
+<body class="bg-[#FFF8E8] flex items-center justify-center min-h-screen">
 
-<div class="w-full max-w-6xl bg-white rounded-[40px] shadow-xl overflow-hidden grid grid-cols-2">
+<div class="w-full max-w-4xl">
 
-    <!-- LEFT -->
+    <div class="bg-white border-4 border-yellow-400 rounded-[45px] px-20 py-16">
 
-    <div class="bg-[#F3C400] flex flex-col justify-center items-center p-12">
+        <!-- ICON -->
 
-        <div class="text-7xl mb-6">
-            💰
+        <div class="flex justify-center">
+
+            <div class="w-24 h-24 rounded-[28px] bg-pink-200 flex items-center justify-center">
+
+                <i class="fa-solid fa-wallet text-[#A31444] text-5xl"></i>
+
+            </div>
+
         </div>
 
-        <h2 class="text-4xl font-bold text-[#4D3900] text-center">
+        <!-- STEP -->
 
-            Almost there!
+        <p class="mt-8 text-center text-pink-600 font-bold text-2xl uppercase">
 
-        </h2>
-
-        <p class="text-[#5D4300] text-center mt-4 text-lg">
-
-            Set your monthly budget to start tracking your expenses.
+            Step 2 of 3 — Monthly Budget
 
         </p>
 
-    </div>
+        <!-- TITLE -->
 
-    <!-- RIGHT -->
+        <h1 class="mt-5 text-center text-[56px] font-black text-[#5B4300] leading-tight">
 
-    <div class="flex items-center justify-center">
+            Set your monthly budget
+
+        </h1>
+
+        <!-- DESCRIPTION -->
+
+        <p class="mt-5 text-center text-[24px] text-[#B3A477] leading-relaxed max-w-3xl mx-auto">
+
+            How much do you plan to spend this month? This becomes
+            your total budget limit. You can break it down by category
+            on the Budget page.
+
+        </p>
+
+        @if ($errors->any())
+
+            <div class="mt-10 rounded-xl bg-red-50 border border-red-300 p-4">
+
+                <p class="text-red-600">
+
+                    {{ $errors->first() }}
+
+                </p>
+
+            </div>
+
+        @endif
 
         <form
             action="{{ route('welcome.step2.save') }}"
             method="POST"
-            class="w-full max-w-md"
-        >
+            class="mt-12">
 
             @csrf
 
-            <h1 class="text-5xl font-extrabold text-[#4D3900] mb-4">
+            <div>
 
-                Monthly Budget
+                <label class="block text-[#5B4300] font-bold text-2xl mb-4">
 
-            </h1>
+                    TOTAL MONTHLY BUDGET (₱)
 
-            <p class="text-gray-500 text-lg mb-10">
+                </label>
 
-                Enter your total monthly budget.
+                <input
+                    type="number"
+                    name="budget"
+                    value="{{ old('budget') }}"
+                    min="1"
+                    step="0.01"
+                    required
 
-            </p>
+                    class="w-full
+                    h-20
+                    rounded-2xl
+                    border
+                    border-gray-300
+                    px-6
+                    text-2xl
+                    outline-none
+                    focus:ring-2
+                    focus:ring-yellow-500">
 
-            <label class="block text-lg font-semibold mb-3">
+            </div>
 
-                Budget
-
-            </label>
-
-            <input
-                type="number"
-                name="budget"
-                min="1"
-                step="0.01"
-                placeholder="₱ 35,000"
-                class="w-full h-16 rounded-2xl border-2 border-gray-300 px-5 text-xl focus:outline-none focus:border-yellow-400"
-                required
-            >
-
-            @error('budget')
-
-                <p class="text-red-500 mt-2">
-
-                    {{ $message }}
-
-                </p>
-
-            @enderror
+            <!-- CONTINUE -->
 
             <button
                 type="submit"
-                class="w-full mt-10 h-16 rounded-2xl bg-[#F3C400] hover:bg-yellow-500 text-[#4D3900] text-xl font-bold transition"
-            >
 
-                Continue →
+                class="mt-10
+                w-full
+                h-20
+                rounded-2xl
+                border-2
+                border-black
+                bg-white
+                text-[#5B4300]
+                text-[34px]
+                font-black
+                hover:bg-yellow-100
+                transition">
+
+                Continue
+                <i class="fa-solid fa-arrow-right ml-2"></i>
 
             </button>
 
         </form>
+
+        <!-- BACK -->
+
+        <a
+            href="{{ route('welcome.step1') }}"
+
+            class="mt-5
+            w-full
+            h-20
+            rounded-2xl
+            border-2
+            border-black
+            bg-white
+            flex
+            items-center
+            justify-center
+            text-[#5B4300]
+            text-[34px]
+            font-black
+            hover:bg-gray-100
+            transition">
+
+            <i class="fa-solid fa-arrow-left mr-3"></i>
+
+            Back
+
+        </a>
 
     </div>
 
