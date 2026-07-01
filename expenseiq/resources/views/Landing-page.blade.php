@@ -1,129 +1,208 @@
-<div class="min-h-screen bg-[#FFF8E8]">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseIQ</title>
 
-    <!-- ================= NAVBAR ================= -->
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
-    <nav class="border-b border-[#D9B54A] bg-white">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
 
-        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center">
+<body class="bg-[#FFF8E8]">
 
-            <div class="w-14 h-14 rounded-2xl bg-[#B88900] flex items-center justify-center shadow-md">
+<!-- NAVBAR -->
 
-                <i class="fa-solid fa-wallet text-white text-2xl"></i>
+<nav class="bg-white border-b border-yellow-400 shadow-sm">
+
+    <div class="max-w-[1700px] mx-auto px-16 py-5 flex items-center">
+
+        <div class="flex items-center gap-4">
+
+            <div class="w-12 h-12 rounded-xl bg-[#B59A16] flex items-center justify-center">
+
+                <i class="fa-solid fa-wallet text-[#4D3900] text-2xl"></i>
 
             </div>
 
-            <h1 class="ml-4 text-4xl font-extrabold text-black tracking-wide">
+            <h1 class="text-5xl font-black">
+
                 ExpenseIQ
+
             </h1>
 
         </div>
 
-    </nav>
+    </div>
 
-    <!-- ================= HERO ================= -->
+</nav>
 
-    <section class="max-w-7xl mx-auto px-8 py-24">
+<!-- HERO -->
 
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
+<section class="max-w-[1700px] mx-auto px-20 py-16">
 
-            <!-- LEFT -->
+    <div class="grid grid-cols-[0.85fr_1.15fr] gap-20 items-center">
 
-            <div>
+        <!-- LEFT -->
 
-                <h1 class="text-[72px] leading-[82px] font-extrabold text-[#5B4300]">
+        <div class="pl-10">
 
-                    Track your<br>
-                    Expenses.<br>
-                    Master your<br>
-                    Money.
+            <h1 class="text-[64px] leading-[72px] font-black text-[#5B4300]">
 
-                </h1>
+                Track your
+                <br>
+                Expenses.
+                <br>
+                Master your
+                <br>
+                Money.
 
-                <p class="mt-10 text-xl leading-9 text-gray-500 max-w-xl">
+            </h1>
 
-                    Take control of your finances with ExpenseIQ.
-                    Record every expense, stay within your budget,
-                    and generate reports that help you understand
-                    where your money goes.
+            <p class="mt-8 text-[22px] leading-relaxed text-[#B3A477] max-w-[520px]">
 
-                </p>
+                ExpenseIQ helps you log daily expenses,
+                set monthly budgets, receive instant alerts,
+                and generate spending reports—
+                all in one simple dashboard.
 
-                <div class="flex gap-6 mt-14">
+            </p>
 
-                    <a
-                        wire:navigate
-                        href="{{ route('register') }}"
-                        class="px-10 py-4 rounded-xl bg-white border-2 border-pink-300 font-bold text-lg hover:bg-pink-50 transition duration-300">
+        </div>
 
-                        Create Account
+        <!-- RIGHT -->
 
-                    </a>
+        <div>
 
-                    <a
-                        wire:navigate
-                        href="{{ route('login') }}"
-                        class="px-12 py-4 rounded-xl bg-white border-2 border-pink-300 font-bold text-lg hover:bg-yellow-100 transition duration-300">
+            <h2 class="text-[46px] font-black text-center text-[#5B4300] mb-10">
+                Everything you need to stay on budget
+            </h2>
 
-                        Log In
+            @php
+                $features = [
 
-                    </a>
+                    [
+                        'icon'=>'fa-circle-plus',
+                        'bg'=>'bg-yellow-300',
+                        'title'=>'Expense Entry',
+                        'desc'=>'Quickly log transactions with category, amount and date.'
+                    ],
 
-                </div>
+                    [
+                        'icon'=>'fa-sliders',
+                        'bg'=>'bg-pink-200',
+                        'title'=>'Monthly Budget',
+                        'desc'=>'Set spending limits per category and monitor your budget.'
+                    ],
 
-            </div>
+                    [
+                        'icon'=>'fa-bell',
+                        'bg'=>'bg-yellow-300',
+                        'title'=>'Budget Alert',
+                        'desc'=>'Receive warnings before you exceed your budget.'
+                    ],
 
-            <!-- RIGHT -->
+                    [
+                        'icon'=>'fa-chart-column',
+                        'bg'=>'bg-pink-200',
+                        'title'=>'View Reports',
+                        'desc'=>'Visual charts and summaries of your spending habits.'
+                    ],
 
-            <div>
+                    [
+                        'icon'=>'fa-download',
+                        'bg'=>'bg-yellow-300',
+                        'title'=>'Export Reports',
+                        'desc'=>'Download your reports as CSV or PDF anytime.'
+                    ],
 
-                <h2 class="text-center text-4xl font-bold text-[#5B4300] mb-12">
+                    [
+                        'icon'=>'fa-user',
+                        'bg'=>'bg-pink-200',
+                        'title'=>'User Accounts',
+                        'desc'=>'Securely manage your account and personal settings.'
+                    ],
 
-                    Everything you need to stay on budget
+                ];
+            @endphp
 
-                </h2>
+            <div class="grid grid-cols-3 gap-5">
 
-                <!-- Feature cards dito sa Part 2 -->
-                 <div class="grid grid-cols-2 xl:grid-cols-3 gap-6">
+                @foreach($features as $feature)
 
-                    @foreach($features as $feature)
+                <div
+                    class="bg-white border-2 border-yellow-400 rounded-[26px] p-5 h-[180px]
+                    transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
-                        <div
-                            class="bg-white border-2 border-[#D9B54A] rounded-[28px] p-6 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="flex items-center gap-3">
 
-                            <!-- Icon -->
-                            <div
-                                class="w-16 h-16 rounded-2xl bg-[#FFD6E7] flex items-center justify-center mb-5">
+                        <div class="w-12 h-12 rounded-xl {{ $feature['bg'] }}
+                            flex items-center justify-center shrink-0">
 
-                                <i class="fa-solid {{ $feature['icon'] }} text-2xl text-[#5B4300]"></i>
-
-                            </div>
-
-                            <!-- Title -->
-
-                            <h3 class="text-xl font-bold text-[#4A3500] mb-3">
-
-                                {{ $feature['title'] }}
-
-                            </h3>
-
-                            <!-- Description -->
-
-                            <p class="text-gray-500 text-sm">
-
-                                {{ $feature['description'] }}
-
-                            </p>
+                            <i class="fa-solid {{ $feature['icon'] }}
+                                text-[#5B4300] text-xl"></i>
 
                         </div>
 
-                    @endforeach
+                        <h3 class="text-[18px] font-bold text-[#4D3900] leading-tight">
+                            {{ $feature['title'] }}
+                        </h3>
+
+                    </div>
+
+                    <p class="mt-4 text-[15px] text-[#9D8A5E] leading-relaxed">
+                        {{ $feature['desc'] }}
+                    </p>
 
                 </div>
+
+                @endforeach
+
+            </div>
+
+            <!-- BUTTONS -->
+
+            <div class="flex justify-center gap-8 mt-10">
+
+                <a href="{{ route('register') }}"
+                    class="px-12 py-4
+                    rounded-2xl
+                    border-2 border-pink-400
+                    bg-white
+                    text-[22px]
+                    font-bold
+                    hover:bg-pink-50
+                    hover:shadow-lg
+                    transition">
+
+                    Create Account
+
+                </a>
+
+                <a href="{{ route('login') }}"
+                    class="px-16 py-4
+                    rounded-2xl
+                    border-2 border-pink-400
+                    bg-white
+                    text-[22px]
+                    font-bold
+                    hover:bg-pink-50
+                    hover:shadow-lg
+                    transition">
+
+                    Log In
+
+                </a>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
 
-</div>
+</section>
+
+</body>
+</html>

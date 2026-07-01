@@ -195,23 +195,6 @@
 
                 </div>
 
-                <div class="mt-5">
-
-                    <label class="font-medium text-sm">
-                        SET MONTHLY BUDGET (₱)
-                    </label>
-
-                    <input
-                        type="number"
-                        name="monthly_budget"
-                        value="{{ old('monthly_budget') }}"
-                        min="1"
-                        step="0.01"
-                        class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
-                        required>
-
-                </div>
-
                 <div class="flex items-start mt-6">
 
                     <input
