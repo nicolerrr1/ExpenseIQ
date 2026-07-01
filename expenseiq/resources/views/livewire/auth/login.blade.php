@@ -40,9 +40,14 @@
                     <label for="remember" class="ml-2 text-sm text-gray-600">Remember me</label>
                 </div>
 
-                <button type="submit"
-                        class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
-                    Log in
+                <p class="text-center text-red-600 font-bold my-4">
+                    TEST BUTTON
+                </p>
+
+                <button
+                    type="submit"
+                    class="w-full bg-red-600 text-white py-3 rounded-lg">
+                    LOGIN NOW
                 </button>
             </form>
 

@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\SettingsController;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -19,6 +23,23 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    Route::get('/reports', [ReportController::class,'index'])
+        ->name('reports.index');
+
+    Route::get('/reports/export/csv', [ExportController::class, 'csv'])
+        ->name('reports.export.csv');
+
+    Route::get('/settings', [SettingsController::class,'index'])
+        ->name('settings.index');
+
+    Route::put('/settings/profile', [SettingsController::class,'updateProfile'])
+        ->name('settings.profile');
+
+    Route::put('/settings/password', [SettingsController::class,'updatePassword'])
+        ->name('settings.password');
 
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
