@@ -1,3 +1,6 @@
-<div>
-    {{-- You must be the change you wish to see in the world. - Mahatma Gandhi --}}
-</div>
+<h1>Settings</h1>
+
+<p>{{ $user->first_name }}</p>
+<p>{{ $user->last_name }}</p>
+<p>{{ $user->nickname }}</p>
+<p>{{ $user->email }}</p>
