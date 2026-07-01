@@ -37,7 +37,11 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('expenses.index');
+        if (!Auth::user()->is_onboarded) {
+            return redirect()->route('welcome.step1');
+        }
+
+return redirect()->route('dashboard');
     }
 
     /**
@@ -85,7 +89,8 @@ class AuthController extends Controller
         Auth::login($user);
 
         $request->session()->regenerate();
-        return redirect()->route('expenses.index');
+
+        return redirect()->route('welcome.step1');
     }
 
     /**

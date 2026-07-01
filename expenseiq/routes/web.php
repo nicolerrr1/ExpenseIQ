@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BudgetController;
@@ -24,6 +25,25 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/welcome', [OnboardingController::class, 'step1'])
+        ->name('welcome.step1');
+
+    Route::post('/welcome', [OnboardingController::class, 'saveStep1'])
+        ->name('welcome.step1.save');
+
+    Route::get('/welcome/budget', [OnboardingController::class, 'step2'])
+        ->name('welcome.step2');
+
+    Route::post('/welcome/budget', [OnboardingController::class, 'saveStep2'])
+        ->name('welcome.step2.save');
+
+    Route::get('/welcome/finish', [OnboardingController::class, 'step3'])
+        ->name('welcome.step3');
+
+    Route::post('/welcome/finish', [OnboardingController::class, 'finish'])
+        ->name('welcome.finish');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
