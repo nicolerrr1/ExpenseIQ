@@ -28,7 +28,12 @@ class ExpenseController extends Controller
             ->latest()
             ->get();
 
-        return view('expenses.index', compact('expenses'));
+        $categories = Category::orderBy('category_name')->get();
+
+        return view(
+            'expenses.index',
+            compact('expenses', 'categories')
+        );
     }
 
     /**

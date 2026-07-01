@@ -19,6 +19,6 @@ class DashboardController extends Controller
         $dashboard = $this->dashboardService
             ->getDashboardData(Auth::id());
 
-        return view('dashboard.index', compact('dashboard'));
+        return view('livewire.dashboard.index', compact('dashboard'));
     }
 }

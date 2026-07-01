@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SettingsController;
 
@@ -28,6 +29,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/reports', [ReportController::class,'index'])
         ->name('reports.index');
+
+    Route::get('/budget', [BudgetController::class, 'index'])
+        ->name('budget.index');
+
+    Route::post('/budget/save', [BudgetController::class, 'save'])
+        ->name('budget.save');
 
     Route::get('/reports/export/csv', [ExportController::class, 'csv'])
         ->name('reports.export.csv');
