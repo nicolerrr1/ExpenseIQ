@@ -2,26 +2,26 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Models\Budget;
-use App\Models\Expense;
 use App\Models\Category;
+use App\Models\Expense;
 
 class DashboardService
 {
     public function getDashboardData(int $userId): array
     {
-        // Current Month
+        $user = User::findOrFail($userId);
+
+        // Current Month Expenses
         $expenses = Expense::where('user_id', $userId)
             ->whereMonth('expense_date', now()->month)
             ->whereYear('expense_date', now()->year);
 
-        $budgets = Budget::where('user_id', $userId)
-            ->where('month', now()->month)
-            ->where('year', now()->year);
-
         $totalExpenses = $expenses->sum('amount');
 
-        $totalBudget = $budgets->sum('budget_amount');
+        // Overall Monthly Budget (from users table)
+        $totalBudget = $user->monthly_budget ?? 0;
 
         $remainingBudget = max($totalBudget - $totalExpenses, 0);
 
@@ -41,7 +41,7 @@ class DashboardService
 
         /*
         |--------------------------------------------------------------------------
-        | Category Chart
+        | Category Chart & Budget Progress
         |--------------------------------------------------------------------------
         */
 
@@ -49,7 +49,6 @@ class DashboardService
 
         $chartLabels = [];
         $chartData = [];
-
         $budgetProgress = [];
 
         foreach ($categories as $category) {
@@ -82,27 +81,16 @@ class DashboardService
         }
 
         return [
-
             'totalExpenses' => $totalExpenses,
-
             'totalBudget' => $totalBudget,
-
             'remainingBudget' => $remainingBudget,
-
             'expenseCount' => $expenseCount,
-
             'recentExpenses' => $recentExpenses,
-
             'budgetPercentage' => $budgetPercentage,
-
             'showWarning' => $showWarning,
-
             'chartLabels' => $chartLabels,
-
             'chartData' => $chartData,
-
             'budgetProgress' => $budgetProgress,
-
         ];
     }
 }

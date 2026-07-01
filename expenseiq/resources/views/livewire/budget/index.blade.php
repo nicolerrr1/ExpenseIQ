@@ -12,22 +12,43 @@
         </h1>
 
         <p class="text-gray-500">
-            Set monthly limits. Alerts fire at 80% and 100%.
+            Allocate your monthly budget for each category.
         </p>
 
     </div>
 
-    <!-- Warning -->
-    <div class="bg-[#F7C2CC] border border-[#E8899A] rounded-2xl px-5 py-3">
+    @if ($errors->has('budget'))
 
-        <p class="text-[#A61C45] font-bold">
-            <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-            Budget Limit Warning
-        </p>
+        <div class="bg-red-100 border border-red-300 rounded-2xl px-5 py-4">
 
-    </div>
+            <p class="text-red-600 font-semibold">
 
-    <!-- Card -->
+                <i class="fa-solid fa-circle-exclamation mr-2"></i>
+
+                {{ $errors->first('budget') }}
+
+            </p>
+
+        </div>
+
+    @endif
+
+    @if(session('success'))
+
+        <div class="bg-green-100 border border-green-300 rounded-2xl px-5 py-4">
+
+            <p class="text-green-700 font-semibold">
+
+                <i class="fa-solid fa-circle-check mr-2"></i>
+
+                {{ session('success') }}
+
+            </p>
+
+        </div>
+
+    @endif
+
     <div class="bg-white rounded-[28px] border-2 border-yellow-400 overflow-hidden">
 
         <form action="{{ route('budget.save') }}" method="POST">
@@ -35,7 +56,6 @@
             @csrf
 
             @php
-                $totalBudget = 0;
                 $totalSpent = 0;
             @endphp
 
@@ -58,7 +78,7 @@
                         </th>
 
                         <th class="text-center text-2xl">
-                            Available
+                            Remaining
                         </th>
 
                     </tr>
@@ -69,17 +89,15 @@
 
                 @foreach($categories as $category)
 
-                   @php
+                    @php
 
                         $budget = $budgets[$category->id] ?? null;
 
-                        $amount = $budget->budget_amount ?? 0;
+                        $amount = $budget->budget_amount ?? '';
 
                         $spentAmount = $spent[$category->id] ?? 0;
 
-                        $available = $amount - $spentAmount;
-
-                        $totalBudget += $amount;
+                        $remaining = ($budget->budget_amount ?? 0) - $spentAmount;
 
                         $totalSpent += $spentAmount;
 
@@ -98,16 +116,15 @@
                             <input
                                 type="hidden"
                                 name="category_id[]"
-                                value="{{ $category->id }}"
-                            >
+                                value="{{ $category->id }}">
 
                             <input
                                 type="number"
                                 name="budget_amount[]"
                                 value="{{ $amount }}"
                                 min="0"
-                                class="w-56 h-14 rounded-xl border border-gray-300 text-center text-2xl focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            >
+                                step="0.01"
+                                class="w-56 h-14 rounded-xl border border-gray-300 text-center text-2xl focus:outline-none focus:ring-2 focus:ring-yellow-400">
 
                         </td>
 
@@ -119,7 +136,7 @@
 
                         <td class="text-center text-2xl">
 
-                            ₱{{ number_format($available,2) }}
+                            ₱{{ number_format($remaining,2) }}
 
                         </td>
 
@@ -133,34 +150,40 @@
 
             <!-- Footer -->
 
-            <div class="flex items-center justify-between px-8 py-6">
+            <div class="border-t border-yellow-300 px-8 py-6 flex justify-between items-center">
 
-                <div class="text-xl font-semibold text-[#5D4300]">
+                <div class="space-y-2 text-lg font-semibold text-[#5D4300]">
 
-                    Total Monthly Budget:
-                    ₱{{ number_format($totalBudget,2) }}
+                    <p>
+                        Monthly Budget:
+                        <span class="font-bold">
+                            ₱{{ number_format($monthlyBudget,2) }}
+                        </span>
+                    </p>
+
+                    <p>
+                        Allocated Budget:
+                        <span class="font-bold">
+                            ₱{{ number_format($allocatedBudget,2) }}
+                        </span>
+                    </p>
+
+                    <p>
+                        Remaining Budget:
+                        <span class="font-bold">
+                            ₱{{ number_format($remainingBudget,2) }}
+                        </span>
+                    </p>
 
                 </div>
 
                 <button
                     type="submit"
-                    class="bg-[#F3C400] hover:bg-yellow-500 text-[#4D3900] font-bold px-8 py-3 rounded-xl transition">
+                    class="bg-[#F3C400] hover:bg-yellow-500 text-[#4D3900] font-bold px-10 py-4 rounded-xl transition">
 
                     Save Budget
 
                 </button>
-
-                <div class="text-xl font-semibold text-[#5D4300]">
-
-                    Total Spent:
-                    ₱{{ number_format($totalSpent,2) }}
-
-                    &nbsp;&nbsp;—&nbsp;&nbsp;
-
-                    Total Available:
-                    ₱{{ number_format($totalBudget - $totalSpent,2) }}
-
-                </div>
 
             </div>
 

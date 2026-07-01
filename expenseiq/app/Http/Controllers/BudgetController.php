@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Budget;
 use App\Models\Category;
 use App\Models\Expense;
@@ -39,15 +38,36 @@ class BudgetController extends Controller
             ->groupBy('category_id')
             ->pluck('total', 'category_id');
 
+        $monthlyBudget = Auth::user()->monthly_budget ?? 0;
+
+        $allocatedBudget = $budgets->sum('budget_amount');
+
+        $remainingBudget = $monthlyBudget - $allocatedBudget;
+
         return view('livewire.budget.index', compact(
             'categories',
             'budgets',
-            'spent'
+            'spent',
+            'monthlyBudget',
+            'allocatedBudget',
+            'remainingBudget'
         ));
     }
 
     public function save(Request $request)
     {
+        $totalAllocated = array_sum($request->budget_amount);
+
+        if ($totalAllocated > Auth::user()->monthly_budget) {
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'budget' => 'The total allocated budget cannot exceed your monthly budget.'
+                ]);
+
+        }
+
         foreach ($request->category_id as $index => $categoryId) {
 
             Budget::updateOrCreate(
