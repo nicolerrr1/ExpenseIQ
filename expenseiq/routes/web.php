@@ -60,13 +60,19 @@ Route::middleware('auth')->group(function () {
         ->name('reports.export.csv');
 
     Route::get('/settings', [SettingsController::class,'index'])
-        ->name('settings.index');
+        ->name('settings');
 
-    Route::put('/settings/profile', [SettingsController::class,'updateProfile'])
+    Route::post('/settings/profile', [SettingsController::class,'updateProfile'])
         ->name('settings.profile');
 
-    Route::put('/settings/password', [SettingsController::class,'updatePassword'])
+    Route::post('/settings/password', [SettingsController::class,'updatePassword'])
         ->name('settings.password');
+
+    Route::post('/settings/clear-data', [SettingsController::class, 'clearData'])
+        ->name('settings.clear');
+
+    Route::delete('setting/delete-account', [SettingsController::class, 'deleteAccount'])
+        ->name('settings.delete');
 
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');

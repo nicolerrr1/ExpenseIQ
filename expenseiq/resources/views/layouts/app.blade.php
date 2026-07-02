@@ -92,7 +92,7 @@
                 </a>
 
                 {{-- Settings --}}
-                <a href="{{ route('settings.index') }}"
+                <a href="{{ route('settings') }}"
                     class="flex items-center gap-3 p-3 rounded-xl transition
                     {{ request()->routeIs('settings.*') ? 'bg-yellow-300 font-semibold shadow-sm' : 'hover:bg-yellow-300' }}">
 
