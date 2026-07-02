@@ -1,32 +1,39 @@
 <?php
 
-namespace App\Models;
+namespace App\Services;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Expense;
+use App\Models\Budget;
 
-class Report extends Model
+class ReportService
 {
-    protected $fillable = [
-        'user_id',
-        'month',
-        'year',
-        'total_budget',
-        'total_expense',
-        'remaining_budget',
-        'generated_at',
-    ];
-
-    protected $casts = [
-        'generated_at' => 'datetime',
-    ];
-
-    public function user()
+    public function getMonthlyReport(int $userId, int $month, int $year): array
     {
-        return $this->belongsTo(User::class);
-    }
+        $expenses = Expense::with('category')
+            ->where('user_id', $userId)
+            ->whereMonth('expense_date', $month)
+            ->whereYear('expense_date', $year)
+            ->get();
 
-    public function exports()
-    {
-        return $this->hasMany(Export::class);
+        $totalExpenses = $expenses->sum('amount');
+
+        $totalBudget = Budget::where('user_id', $userId)
+            ->where('month', $month)
+            ->where('year', $year)
+            ->sum('budget_amount');
+
+        $remainingBudget = $totalBudget - $totalExpenses;
+
+        $categorySummary = $expenses
+            ->groupBy(fn($expense) => $expense->category->category_name)
+            ->map(fn($items) => $items->sum('amount'));
+
+        return [
+            'totalBudget' => $totalBudget,
+            'totalExpenses' => $totalExpenses,
+            'remainingBudget' => $remainingBudget,
+            'categorySummary' => $categorySummary,
+            'expenses' => $expenses,
+        ];
     }
 }

@@ -230,7 +230,7 @@
             </div>
 
             <!-- Category Chart -->
-            <div class="w-[300px] h-[300px]">
+            <div class="w-[440px] h-[440px]">
                 <canvas id="categoryChart"></canvas>
             </div>
 
