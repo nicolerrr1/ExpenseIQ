@@ -1,12 +1,13 @@
-<div class="w-[360px] bg-white border-r border-[#E6B400] flex flex-col">
+<div class="w-[360px] bg-white border-r border-[#E6B400] flex flex-col min-h-screen">
 
     <!-- Header -->
+
     <div class="px-8 py-7 border-b border-[#E6B400]">
 
         <div class="flex items-center gap-4">
 
             <a href="{{ route('dashboard') }}"
-                class="w-10 h-10 rounded-full bg-[#7A5A00] text-white flex items-center justify-center">
+                class="w-10 h-10 rounded-full bg-[#7A5A00] text-white flex items-center justify-center hover:bg-[#5D4300]">
 
                 <i class="fa-solid fa-chevron-left"></i>
 
@@ -27,6 +28,8 @@
         <p class="px-6 text-[#5D4300] font-bold text-sm uppercase">
             Your Account
         </p>
+
+        <!-- Personal Information -->
 
         <a href="#"
             class="mt-5 flex items-center gap-4 px-6 py-4 bg-[#FFF1B3] border-y border-[#E6B400]">
@@ -51,12 +54,14 @@
 
         </a>
 
-        <a href="#"
-            class="flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD]">
+        <!-- Password -->
+
+        <a href="#password"
+            class="flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD] transition">
 
             <div class="w-12 h-12 rounded-full bg-[#FFE9A8] flex items-center justify-center">
 
-                <i class="fa-solid fa-lock text-[#9B6A00]"></i>
+                <i class="fa-solid fa-lock text-[#9B6A00] text-lg"></i>
 
             </div>
 
@@ -84,8 +89,10 @@
             More
         </p>
 
-        <a href="#"
-            class="mt-5 flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD]">
+        <!-- Danger Zone -->
+
+        <a href="#danger"
+            class="mt-5 flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD] transition">
 
             <div class="w-12 h-12 rounded-full bg-[#FFD6DB] flex items-center justify-center">
 
