@@ -21,49 +21,59 @@
 
     </div>
 
-    <!-- Warning -->
+  <!-- Dashboard Warning -->
 
-    @if($dashboard['showWarning'])
+    @if(count($dashboard['warnings']))
 
-    <div
-        class="flex items-center gap-4
-        bg-[#F9C7CF]
-        border border-[#E89BAA]
-        rounded-[22px]
-        px-6 py-5">
+    <div class="bg-[#F9C7CF] border border-[#E89BAA] rounded-2xl px-6 py-5">
 
-        <div
-            class="w-12 h-12
-            rounded-full
-            bg-[#F39BAE]
-            flex items-center justify-center">
+        <div class="flex items-start gap-4">
 
-            <i class="fa-solid fa-triangle-exclamation
-                text-white text-xl"></i>
+            <div
+                class="w-11 h-11
+                rounded-full
+                bg-[#F39BAE]
+                flex items-center
+                justify-center
+                shrink-0">
 
-        </div>
+                <i class="fa-solid fa-triangle-exclamation text-white"></i>
 
-        <div>
+            </div>
 
-            <h3 class="font-bold text-[#8C2740] text-lg">
+            <div>
 
-                Budget Limit Warning
+                <h3 class="font-bold text-[#8C2740] text-lg">
 
-            </h3>
+                    Budget Limit Warning
 
-            <p class="text-[#8C2740]">
+                </h3>
 
-                You have already used
+                <p class="text-[#8C2740] leading-relaxed">
 
-                <strong>
+                    @foreach($dashboard['warnings'] as $warning)
 
-                    {{ number_format($dashboard['budgetPercentage'],0) }}%
+                        <strong>{{ $warning['name'] }}</strong>
 
-                </strong>
+                        ({{ $warning['percentage'] }}%)
 
-                of your monthly budget.
+                        @if(!$loop->last)
+                            ,
+                        @endif
 
-            </p>
+                    @endforeach
+
+                    {{ count($dashboard['warnings']) > 1 ? 'are' : 'is' }}
+
+                    near
+
+                    {{ count($dashboard['warnings']) > 1 ? 'their' : 'its' }}
+
+                    budget limit.
+
+                </p>
+
+            </div>
 
         </div>
 

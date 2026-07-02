@@ -33,22 +33,68 @@
 
     @endif
 
-    @if(session('success'))
+    {{-- Budget Warning --}}
 
-        <div class="bg-green-100 border border-green-300 rounded-2xl px-5 py-4">
+    @if(count($warnings))
 
-            <p class="text-green-700 font-semibold">
+    <div class="bg-[#F9C7CF] border border-[#E89BAA] rounded-2xl px-6 py-5">
 
-                <i class="fa-solid fa-circle-check mr-2"></i>
+        <div class="flex items-start gap-4">
 
-                {{ session('success') }}
+            <div
+                class="w-11 h-11 rounded-full
+                bg-[#F39BAE]
+                flex items-center justify-center
+                shrink-0">
 
-            </p>
+                <i class="fa-solid fa-triangle-exclamation text-white"></i>
+
+            </div>
+
+            <div>
+
+                <h3 class="font-bold text-[#8C2740] text-lg">
+
+                    Budget Limit Warning
+
+                </h3>
+
+                <p class="text-[#8C2740] leading-relaxed">
+
+                    @foreach($warnings as $index => $warning)
+
+                        <strong>
+
+                            {{ $warning['name'] }}
+
+                        </strong>
+
+                        ({{ $warning['percentage'] }}%)
+
+                        @if(!$loop->last)
+                            ,
+                        @endif
+
+                    @endforeach
+
+                    {{ count($warnings) > 1 ? 'are' : 'is' }}
+
+                    nearing
+
+                    {{ count($warnings) > 1 ? 'their' : 'its' }}
+
+                    budget limit.
+
+                </p>
+
+            </div>
 
         </div>
 
-    @endif
+    </div>
 
+    @endif
+    
     <div class="bg-white rounded-[28px] border-2 border-yellow-400 overflow-hidden">
 
         <form action="{{ route('budget.save') }}" method="POST">
@@ -63,25 +109,29 @@
 
                 <thead>
 
-                    <tr class="bg-[#F3C400] text-[#5D4300]">
+                <tr class="bg-[#F3C400] text-[#5D4300]">
 
-                        <th class="text-left px-8 py-4 text-2xl">
-                            Category
-                        </th>
+                    <th class="text-left px-8 py-4 text-2xl">
+                        Category
+                    </th>
 
-                        <th class="text-center text-2xl">
-                            Budget
-                        </th>
+                    <th class="text-center text-2xl">
+                        Budget
+                    </th>
 
-                        <th class="text-center text-2xl">
-                            Spent
-                        </th>
+                    <th class="text-center text-2xl">
+                        Spent
+                    </th>
 
-                        <th class="text-center text-2xl">
-                            Remaining
-                        </th>
+                    <th class="text-center text-2xl">
+                        Remaining
+                    </th>
 
-                    </tr>
+                    <th class="text-center text-2xl">
+                        Progress
+                    </th>
+
+                </tr>
 
                 </thead>
 

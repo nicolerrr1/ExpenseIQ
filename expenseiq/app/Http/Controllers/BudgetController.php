@@ -5,11 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Budget;
 use App\Models\Category;
 use App\Models\Expense;
+use App\Services\BudgetWarningService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
+    protected BudgetWarningService $warningService;
+
+    public function __construct(BudgetWarningService $warningService)
+    {
+        $this->warningService = $warningService;
+    }
+
     public function index()
     {
         $order = [
@@ -44,13 +52,17 @@ class BudgetController extends Controller
 
         $remainingBudget = $monthlyBudget - $allocatedBudget;
 
+        // Reusable Warning Logic
+        $warnings = $this->warningService->getWarnings(Auth::id());
+
         return view('livewire.budget.index', compact(
             'categories',
             'budgets',
             'spent',
             'monthlyBudget',
             'allocatedBudget',
-            'remainingBudget'
+            'remainingBudget',
+            'warnings'
         ));
     }
 
@@ -63,7 +75,7 @@ class BudgetController extends Controller
             return back()
                 ->withInput()
                 ->withErrors([
-                    'budget' => 'The total allocated budget cannot exceed your monthly budget.'
+                    'budget' => 'The total allocated budget cannot exceed your monthly budget.',
                 ]);
 
         }
@@ -83,7 +95,8 @@ class BudgetController extends Controller
             );
         }
 
-        return redirect()->route('budget.index')
+        return redirect()
+            ->route('budget.index')
             ->with('success', 'Budget saved successfully.');
     }
 }
