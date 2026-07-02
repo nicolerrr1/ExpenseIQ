@@ -127,10 +127,6 @@
                         Remaining
                     </th>
 
-                    <th class="text-center text-2xl">
-                        Progress
-                    </th>
-
                 </tr>
 
                 </thead>
@@ -212,7 +208,7 @@
                     </p>
 
                     <p>
-                        Allocated Budget:
+                        Spent Budget:
                         <span class="font-bold">
                             ₱{{ number_format($allocatedBudget,2) }}
                         </span>
