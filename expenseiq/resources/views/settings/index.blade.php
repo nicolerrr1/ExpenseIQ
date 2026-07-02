@@ -35,7 +35,5 @@
 @include('settings.modals.clear-data')
 @include('settings.modals.delete-account')
 
-<script src="{{ asset('js/settings.js') }}"></script>
-
 </body>
 </html>

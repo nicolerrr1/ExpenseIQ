@@ -36,23 +36,8 @@
 
             <input
                 type="hidden"
-                name="first_name"
-                value="{{ $user->first_name }}">
-
-            <input
-                type="hidden"
-                name="last_name"
-                value="{{ $user->last_name }}">
-
-            <input
-                type="hidden"
-                name="nickname"
-                value="{{ $user->nickname }}">
-
-            <input
-                type="hidden"
-                name="email"
-                value="{{ $user->email }}">
+                name="type"
+                value="budget">
 
             <!-- Body -->
 

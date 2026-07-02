@@ -44,24 +44,61 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
 
-        $validated = $request->validate([
+        switch ($request->type) {
 
-            'first_name' => 'required|string|max:255',
+            case 'nickname':
 
-            'last_name' => 'required|string|max:255',
+                $request->validate([
+                    'nickname' => 'required|string|max:255',
+                ]);
 
-            'nickname' => 'required|string|max:255',
+                $user->update([
+                    'nickname' => $request->nickname,
+                ]);
 
-            'email' => 'required|email|unique:users,email,' . $user->id,
+                break;
 
-            'monthly_budget' => 'required|numeric|min:0',
+            case 'fullname':
 
-        ]);
+                $request->validate([
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                ]);
 
-        $user->update($validated);
+                $user->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                ]);
+
+                break;
+
+            case 'email':
+
+                $request->validate([
+                    'email' => 'required|email|unique:users,email,' . $user->id,
+                ]);
+
+                $user->update([
+                    'email' => $request->email,
+                ]);
+
+                break;
+
+            case 'budget':
+
+                $request->validate([
+                    'monthly_budget' => 'required|numeric|min:0',
+                ]);
+
+                $user->update([
+                    'monthly_budget' => $request->monthly_budget,
+                ]);
+
+                break;
+        }
 
         return redirect()
-            ->route('settings')
+            ->back()
             ->with('success', 'Profile updated successfully.');
     }
 

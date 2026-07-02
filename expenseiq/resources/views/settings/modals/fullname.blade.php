@@ -32,23 +32,6 @@
 
             @csrf
 
-            <!-- Hidden Fields -->
-
-            <input
-                type="hidden"
-                name="nickname"
-                value="{{ $user->nickname }}">
-
-            <input
-                type="hidden"
-                name="email"
-                value="{{ $user->email }}">
-
-            <input
-                type="hidden"
-                name="monthly_budget"
-                value="{{ $user->monthly_budget }}">
-
             <!-- Body -->
 
             <div class="px-10 py-8 space-y-6">
