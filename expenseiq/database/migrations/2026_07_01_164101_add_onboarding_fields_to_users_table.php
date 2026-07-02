@@ -12,12 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-
-            // Add only if it doesn't already exist
-            if (!Schema::hasColumn('users', 'is_onboarded')) {
-                $table->boolean('is_onboarded')->default(false);
-            }
-
+            $table->boolean('is_onboarded')->default(false)->after('monthly_budget');
         });
     }
 
@@ -27,11 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-
-            if (Schema::hasColumn('users', 'is_onboarded')) {
-                $table->dropColumn('is_onboarded');
-            }
-
+            $table->dropColumn('is_onboarded');
         });
     }
 };

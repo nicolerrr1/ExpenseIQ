@@ -86,7 +86,7 @@ return redirect()->route('dashboard');
 
         ]);
 
-        Auth::login($user);
+       Auth::login($user);
 
         $request->session()->regenerate();
 
