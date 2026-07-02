@@ -2,57 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
+use App\Models\Expense;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Personal Information
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Settings Page
+     */
     public function index()
     {
-        $user = Auth::user();
-
-        return view('settings.index', compact('user'));
+        return view('settings.index', [
+            'user' => auth()->user(),
+            'page' => 'personal',
+        ]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Password & Security
-    |--------------------------------------------------------------------------
-    */
 
     public function password()
     {
-        $user = Auth::user();
-
-        return view('settings.password', compact('user'));
+        return view('settings.index', [
+            'user' => auth()->user(),
+            'page' => 'password',
+        ]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Danger Zone
-    |--------------------------------------------------------------------------
-    */
 
     public function danger()
     {
-        $user = Auth::user();
-
-        return view('settings.danger', compact('user'));
+        return view('settings.index', [
+            'user' => auth()->user(),
+            'page' => 'danger',
+        ]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Update Profile
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Update Personal Information
+     */
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
@@ -60,9 +47,13 @@ class SettingsController extends Controller
         $validated = $request->validate([
 
             'first_name' => 'required|string|max:255',
+
             'last_name' => 'required|string|max:255',
+
             'nickname' => 'required|string|max:255',
+
             'email' => 'required|email|unique:users,email,' . $user->id,
+
             'monthly_budget' => 'required|numeric|min:0',
 
         ]);
@@ -71,67 +62,72 @@ class SettingsController extends Controller
 
         return redirect()
             ->route('settings')
-            ->with('success', 'Profile updated successfully!');
+            ->with('success', 'Profile updated successfully.');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Update Password
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Change Password
+     */
     public function updatePassword(Request $request)
     {
         $request->validate([
+
             'current_password' => 'required',
+
             'password' => 'required|min:8|confirmed',
+
         ]);
 
         $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
 
             return back()->withErrors([
-                'current_password' => 'Current password is incorrect.'
+                'current_password' => 'Current password is incorrect.',
             ]);
-
         }
 
-        $user->password = Hash::make($request->password);
+        $user->update([
 
-        $user->save();
+            'password' => Hash::make($request->password),
 
-        return back()->with('success', 'Password updated successfully.');
+        ]);
+
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Password updated successfully.');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Clear All Data
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Delete Expenses, Budgets and Reports
+     */
     public function clearData()
     {
-        $user = Auth::user();
+        $userId = Auth::id();
 
-        $user->expenses()->delete();
+        Expense::where('user_id', $userId)->delete();
 
-        $user->budgets()->delete();
+        Budget::where('user_id', $userId)->delete();
 
-        $user->reports()->delete();
+        Report::where('user_id', $userId)->delete();
 
-        return back()->with('success', 'All data has been cleared.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'All data has been deleted.');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Delete Account
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * Delete Account
+     */
     public function deleteAccount(Request $request)
     {
         $user = Auth::user();
+
+        Expense::where('user_id', $user->id)->delete();
+
+        Budget::where('user_id', $user->id)->delete();
+
+        Report::where('user_id', $user->id)->delete();
 
         Auth::logout();
 
@@ -141,7 +137,6 @@ class SettingsController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')
-            ->with('success', 'Account deleted successfully.');
+        return redirect()->route('landing');
     }
 }

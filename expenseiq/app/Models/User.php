@@ -13,9 +13,9 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'nickname',
         'email',
         'password',
-        'nickname',
         'monthly_budget',
         'is_onboarded',
     ];
@@ -25,7 +25,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts =[
+    protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
@@ -35,7 +35,7 @@ class User extends Authenticatable
         return $this->hasMany(Expense::class);
     }
 
-    public function budgets()
+    public function budget()
     {
         return $this->hasMany(Budget::class);
     }

@@ -68,13 +68,13 @@ Route::middleware('auth')->group(function () {
         ->name('settings');
 
     Route::get('/settings/password', [SettingsController::class, 'password'])
-        ->name('settings.password');
+        ->name('settings.password.page');
 
     Route::get('/settings/danger', [SettingsController::class, 'danger'])
-        ->name('settings.danger');
+        ->name('settings.danger.page');
 
     Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])
-        ->name('settings.profile.update');
+        ->name('settings.profile');
 
     Route::put('/settings/password', [SettingsController::class, 'updatePassword'])
         ->name('settings.password.update');

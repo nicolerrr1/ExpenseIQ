@@ -31,8 +31,11 @@
 
         <!-- Personal Information -->
 
-        <a href="#"
-            class="mt-5 flex items-center gap-4 px-6 py-4 bg-[#FFF1B3] border-y border-[#E6B400]">
+        <a href="{{ route('settings') }}"
+        class="mt-5 flex items-center gap-4 px-6 py-4
+        {{ request()->routeIs('settings')
+            ? 'bg-[#FFF1B3] border-y border-[#E6B400]'
+            : 'hover:bg-[#FFF8DD]' }}">
 
             <div class="w-12 h-12 rounded-full bg-[#FFE9A8] flex items-center justify-center">
 
@@ -56,8 +59,11 @@
 
         <!-- Password -->
 
-        <a href="#password"
-            class="flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD] transition">
+        <a href="{{ route('settings.password.page') }}"
+        class="flex items-center gap-4 px-6 py-4
+        {{ request()->routeIs('settings.password.page')
+            ? 'bg-[#FFF1B3] border-y border-[#E6B400]'
+            : 'hover:bg-[#FFF8DD]' }}">
 
             <div class="w-12 h-12 rounded-full bg-[#FFE9A8] flex items-center justify-center">
 
@@ -91,8 +97,11 @@
 
         <!-- Danger Zone -->
 
-        <a href="#danger"
-            class="mt-5 flex items-center gap-4 px-6 py-4 hover:bg-[#FFF8DD] transition">
+        <a href="{{ route('settings.danger.page') }}"
+        class="mt-5 flex items-center gap-4 px-6 py-4
+        {{ request()->routeIs('settings.danger.page')
+            ? 'bg-[#FFF1B3] border-y border-[#E6B400]'
+            : 'hover:bg-[#FFF8DD]' }}">
 
             <div class="w-12 h-12 rounded-full bg-[#FFD6DB] flex items-center justify-center">
 
