@@ -1,57 +1,117 @@
 <div class="space-y-6">
 
-    <!-- Header -->
-    <div>
+    {{-- Success Message --}}
+    @if(session()->has('success'))
+        <div
+            class="rounded-2xl border border-green-300 bg-green-100 px-5 py-4 text-green-700">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    {{-- Header --}}
+    <div>
         <h1 class="text-[48px] font-extrabold text-[#4D3900] leading-none">
             Expenses
         </h1>
 
-        <p class="text-[#6C6C6C] text-lg mt-2">
+        <p class="mt-2 text-lg text-[#6C6C6C]">
             Track your daily expenses
         </p>
-
     </div>
 
-    <!-- Add Expense -->
-    <div class="bg-white border-2 border-yellow-400 rounded-[28px] p-8">
+    {{-- Add Expense Card --}}
+    <div
+        class="rounded-[30px] border-2 border-[#F2C94C] bg-white p-8 shadow-sm">
 
-        <h2 class="text-2xl font-bold text-[#5D4300] mb-6">
-            Add Expense
-        </h2>
+        <div class="flex items-center justify-between">
 
-        <form action="{{ route('expenses.store') }}" method="POST">
+            <h2 class="text-3xl font-bold text-[#5D4300]">
+                Add New Expenses
+            </h2>
 
-            @csrf
+        </div>
+
+        {{-- Unsaved Banner --}}
+        @if(
+            $description ||
+            $amount ||
+            $category_id ||
+            $notes
+        )
+
+            <div
+                class="mt-6 flex items-center justify-between rounded-2xl border border-[#F5C542] bg-[#FFF6DA] px-5 py-4">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-circle-exclamation text-[#D39B00]"></i>
+
+                    <div>
+
+                        <p class="font-semibold text-[#6A4B00]">
+                            Unsaved changes
+                        </p>
+
+                        <p class="text-sm text-[#8A6A00]">
+                            Save before leaving this page.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        @endif
+
+        {{-- Form --}}
+        <form
+            wire:submit="saveExpense"
+            class="mt-8 space-y-6">
 
             <div class="grid grid-cols-2 gap-6">
 
-                <!-- Description -->
+                {{-- Title --}}
                 <div>
 
-                    <label class="block mb-2 font-medium">
-                        Description
+                    <label
+                        class="mb-2 block font-semibold text-[#4D3900]">
+
+                        Title
+
                     </label>
 
                     <input
                         type="text"
-                        name="description"
-                        class="w-full rounded-xl border border-gray-300 p-3"
-                        required>
+                        wire:model.live="description"
+                        placeholder="Enter expense title..."
+                        class="w-full rounded-2xl border border-gray-300 px-5 py-3 outline-none transition focus:border-[#F2C94C]">
+
+                    @error('description')
+                        <p class="mt-2 text-sm text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
 
                 </div>
 
-                <!-- Category -->
+                {{-- Category --}}
                 <div>
 
-                    <label class="block mb-2 font-medium">
+                    <label
+                        class="mb-2 block font-semibold text-[#4D3900]">
+
                         Category
+
                     </label>
 
                     <select
-                        name="category_id"
-                        class="w-full rounded-xl border border-gray-300 p-3"
-                        required>
+                        wire:model.live="category_id"
+                        class="w-full rounded-2xl border border-gray-300 px-5 py-3 outline-none transition focus:border-[#F2C94C]">
+
+                        <option value="">
+                            Select Category
+                        </option>
 
                         @foreach($categories as $category)
 
@@ -63,61 +123,89 @@
 
                     </select>
 
+                    @error('category_id')
+                        <p class="mt-2 text-sm text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
                 </div>
 
-                <!-- Amount -->
+                {{-- Amount --}}
                 <div>
 
-                    <label class="block mb-2 font-medium">
+                    <label
+                        class="mb-2 block font-semibold text-[#4D3900]">
+
                         Amount
+
                     </label>
 
                     <input
                         type="number"
                         step="0.01"
-                        name="amount"
-                        class="w-full rounded-xl border border-gray-300 p-3"
-                        required>
+                        wire:model.live="amount"
+                        placeholder="0.00"
+                        class="w-full rounded-2xl border border-gray-300 px-5 py-3 outline-none transition focus:border-[#F2C94C]">
+
+                    @error('amount')
+                        <p class="mt-2 text-sm text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
 
                 </div>
 
-                <!-- Date -->
+                {{-- Date --}}
                 <div>
 
-                    <label class="block mb-2 font-medium">
+                    <label
+                        class="mb-2 block font-semibold text-[#4D3900]">
+
                         Date
+
                     </label>
 
                     <input
                         type="date"
-                        name="expense_date"
-                        class="w-full rounded-xl border border-gray-300 p-3"
-                        required>
+                        wire:model.live="expense_date"
+                        class="w-full rounded-2xl border border-gray-300 px-5 py-3 outline-none transition focus:border-[#F2C94C]">
+
+                    @error('expense_date')
+                        <p class="mt-2 text-sm text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
 
                 </div>
 
             </div>
 
-            <!-- Notes -->
-            <div class="mt-6">
+            {{-- Notes --}}
+            <div>
 
-                <label class="block mb-2 font-medium">
+                <label
+                    class="mb-2 block font-semibold text-[#4D3900]">
+
                     Notes
+
                 </label>
 
                 <textarea
-                    name="notes"
                     rows="4"
-                    class="w-full rounded-xl border border-gray-300 p-3"></textarea>
+                    wire:model.live="notes"
+                    placeholder="Add notes..."
+                    class="w-full rounded-2xl border border-gray-300 px-5 py-3 outline-none transition focus:border-[#F2C94C]"></textarea>
 
             </div>
 
-            <!-- Buttons -->
-            <div class="flex justify-end gap-4 mt-8">
+            {{-- Buttons --}}
+            <div class="flex justify-end gap-4 pt-2">
 
                 <button
-                    type="reset"
-                    class="px-8 py-3 rounded-xl border border-gray-300">
+                    type="button"
+                    wire:click="$set('showUnsavedModal', true)"
+                    class="rounded-2xl border border-gray-300 px-8 py-3 font-semibold transition hover:bg-gray-100">
 
                     Cancel
 
@@ -125,7 +213,7 @@
 
                 <button
                     type="submit"
-                    class="px-8 py-3 rounded-xl bg-[#F5C000] font-semibold hover:bg-yellow-500">
+                    class="rounded-2xl bg-[#F5C000] px-8 py-3 font-semibold text-[#4D3900] transition hover:bg-yellow-400">
 
                     Save Expense
 
@@ -137,468 +225,184 @@
 
     </div>
 
-    <!-- Expense Record -->
-    <div class="bg-white border-2 border-yellow-400 rounded-[28px] p-8">
+    {{-- Expense Record Card --}}
+    <div class="rounded-[30px] border-2 border-[#F2C94C] bg-white p-8 shadow-sm">
 
-        <h2 class="text-2xl font-bold text-[#5D4300] mb-6">
-            Expense Record
-        </h2>
+        <div class="mb-6 flex items-center justify-between">
+
+            <h2 class="text-3xl font-bold text-[#5D4300]">
+                Expense Record
+            </h2>
+
+        </div>
 
         <div class="overflow-x-auto">
 
-            <table class="w-full">
+            <table class="min-w-full">
 
-                <thead>
+<thead>
 
-                    <tr class="border-b border-yellow-300">
+    <tr class="border-b border-[#F2C94C] text-[#5D4300]">
 
-                        <th class="text-left py-4">Date</th>
+        <th class="py-4 text-left font-bold">
+            Date
+        </th>
 
-                        <th class="text-left">Category</th>
+        <th class="text-left font-bold">
+            Category
+        </th>
 
-                        <th class="text-left">Description</th>
+        <th class="text-left font-bold">
+            Title
+        </th>
 
-                        <th class="text-right">Amount</th>
+        <th class="text-right font-bold">
+            Amount
+        </th>
 
-                        <th class="text-center">Action</th>
+        <th class="text-center font-bold w-[140px]">
+            Action
+        </th>
 
-                    </tr>
+    </tr>
 
-                </thead>
+</thead>
 
-                <tbody>
+<tbody>
 
-                    @forelse($expenses as $expense)
+    @forelse($expenses as $expense)
 
-                    <tr class="border-b border-gray-100 hover:bg-yellow-50">
+        <tr
+            wire:key="expense-{{ $expense->id }}"
+            class="border-b border-[#F6E7AF] hover:bg-[#FFFDF5] transition">
 
-                        <td class="py-4">
-                            {{ $expense->expense_date->format('M d, Y') }}
-                        </td>
+            {{-- Date --}}
+            <td class="py-5">
 
-                        <td>
-                            {{ $expense->category->category_name }}
-                        </td>
+                <span class="text-[#4D3900]">
 
-                        <td>
-                            {{ $expense->description }}
-                        </td>
+                    {{ \Carbon\Carbon::parse($expense->expense_date)->format('M d, Y') }}
 
-                        <td class="text-right font-semibold">
-                            ₱{{ number_format($expense->amount,2) }}
-                        </td>
+                </span>
 
-                        <td>
+            </td>
 
-                            <div class="flex justify-center gap-4">
+            {{-- Category --}}
+            <td>
 
-                             <button
-                                type="button"
-                                onclick="openEditModal(
-                                    '{{ route('expenses.update',$expense) }}',
-                                    '{{ $expense->description }}',
-                                    '{{ $expense->amount }}',
-                                    '{{ $expense->expense_date->format('Y-m-d') }}',
-                                    '{{ $expense->category_id }}',
-                                    '{{ $expense->note }}'
-                                )"
-                                class="w-10 h-10 rounded-full bg-[#FFEFC2] flex items-center justify-center hover:bg-yellow-300 transition">
+                <span
+                    class="inline-flex items-center rounded-full bg-[#FFF2C7] px-4 py-2 text-sm font-semibold text-[#7A5A00]">
 
-                                <i class="fa-solid fa-pen-to-square text-[#6A4B00]"></i>
+                    {{ $expense->category->category_name }}
 
-                            </button>
+                </span>
 
-                                <button
-                                    type="button"
-                                    onclick="openDeleteModal('{{ route('expenses.destroy',$expense) }}')"
-                                    class="w-10 h-10 rounded-full bg-[#FFD8D8] flex items-center justify-center hover:bg-red-300">
+            </td>
 
-                                    <i class="fa-solid fa-trash text-red-600"></i>
+            {{-- Title --}}
+            <td>
 
-                                </button>
+                <div class="font-semibold text-[#4D3900]">
 
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button
-                                        onclick="return confirm('Delete this expense?')"
-                                        class="text-red-600 hover:text-red-800">
-
-                                
-
-                                    </button>
-
-                                </form>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    @empty
-
-                    <tr>
-
-                        <td colspan="5" class="text-center py-10 text-gray-500">
-
-                            No expenses recorded.
-
-                        </td>
-
-                    </tr>
-
-                    @endforelse
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-    <!-- Edit Modal -->
-
-    <div
-    id="editModal"
-    class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
-
-        <div class="bg-white rounded-[28px] w-[720px] p-8">
-
-            <div class="flex justify-between items-center mb-6">
-
-                <h2 class="text-2xl font-bold text-[#5D4300]">
-
-                    Edit Expense
-
-                </h2>
-
-                <button
-                    onclick="closeEditModal()"
-                    class="text-3xl">
-
-                    &times;
-
-                </button>
-
-            </div>
-
-            <form
-                id="editForm"
-                method="POST">
-
-                @csrf
-                @method('PUT')
-
-                <div class="grid grid-cols-2 gap-6">
-
-                    <div>
-
-                        <label>Description</label>
-
-                        <input
-                            id="edit_description"
-                            name="description"
-                            class="w-full border rounded-xl p-3">
-
-                    </div>
-
-                    <div>
-
-                        <label>Amount</label>
-
-                        <input
-                            id="edit_amount"
-                            type="number"
-                            step="0.01"
-                            name="amount"
-                            class="w-full border rounded-xl p-3">
-
-                    </div>
-
-                    <div>
-
-                        <label>Date</label>
-
-                        <input
-                            id="edit_date"
-                            type="date"
-                            name="expense_date"
-                            class="w-full border rounded-xl p-3">
-
-                    </div>
-
-                    <div>
-
-                        <label>Category</label>
-
-                        <select
-                            id="edit_category"
-                            name="category_id"
-                            class="w-full border rounded-xl p-3">
-
-                            @foreach($categories as $category)
-
-                            <option value="{{ $category->id }}">
-
-                                {{ $category->category_name }}
-
-                            </option>
-
-                            @endforeach
-
-                        </select>
-
-                    </div>
+                    {{ $expense->description }}
 
                 </div>
 
-                <div class="mt-6">
+                @if($expense->notes)
 
-                    <label>Notes</label>
+                    <div class="mt-1 text-sm text-gray-500">
 
-                    <textarea
-                        id="edit_note"
-                        name="notes"
-                        rows="4"
-                        class="w-full border rounded-xl p-3"></textarea>
+                        {{ $expense->notes }}
 
-                </div>
+                    </div>
 
-                <div class="flex justify-end gap-4 mt-8">
+                @endif
 
+            </td>
+
+            {{-- Amount --}}
+            <td class="text-right">
+
+                <span class="font-bold text-[#5D4300]">
+
+                    ₱{{ number_format($expense->amount,2) }}
+
+                </span>
+
+            </td>
+
+            {{-- Actions --}}
+            <td>
+
+                <div class="flex justify-center gap-3">
+
+                    {{-- Edit --}}
                     <button
                         type="button"
-                        onclick="closeEditModal()"
-                        class="px-8 py-3 border rounded-xl">
+                        wire:click="editExpense({{ $expense->id }})"
+                        class="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFEFC2] transition hover:bg-[#FFD95C]">
 
-                        Cancel
-
-                    </button>
-
-                    <button
-                        class="px-8 py-3 bg-[#F5C000] rounded-xl font-semibold">
-
-                        Save Changes
+                        <i class="fa-solid fa-pen text-[#6A4B00]"></i>
 
                     </button>
 
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-    <!-- Delete Modal -->
-
-    <div
-        id="deleteModal"
-        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
-
-        <div class="bg-white rounded-[28px] w-[420px] p-8 text-center">
-
-            <div class="w-20 h-20 mx-auto rounded-full bg-red-100 flex items-center justify-center mb-5">
-
-                <i class="fa-solid fa-trash text-red-500 text-3xl"></i>
-
-            </div>
-
-            <h2 class="text-2xl font-bold text-[#4D3900]">
-
-                Delete Expense?
-
-            </h2>
-
-            <p class="text-gray-500 mt-3 mb-8">
-
-                This action cannot be undone.
-
-            </p>
-
-            <form
-                id="deleteForm"
-                method="POST">
-
-                @csrf
-                @method('DELETE')
-
-                <div class="flex gap-4 justify-center">
-
+                    {{-- Delete --}}
                     <button
                         type="button"
-                        onclick="closeDeleteModal()"
-                        class="px-7 py-3 rounded-xl border">
+                        wire:click="confirmDelete({{ $expense->id }})"
+                        class="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFD8D8] transition hover:bg-[#FFBABA]">
 
-                        Cancel
-
-                    </button>
-
-                    <button
-                        class="px-7 py-3 rounded-xl bg-red-500 text-white">
-
-                        Delete
+                        <i class="fa-solid fa-trash text-red-600"></i>
 
                     </button>
 
                 </div>
 
-            </form>
+            </td>
 
-        </div>
+        </tr>
 
-    </div>
+    @empty
 
-    <!-- Unsaved Changes Modal -->
+        <tr>
 
-    <div
-        id="unsavedModal"
-        class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+            <td
+                colspan="5"
+                class="py-14 text-center text-gray-500">
 
-        <div class="bg-white rounded-[28px] w-[430px] p-8 text-center">
+                <div class="flex flex-col items-center">
 
-            <div class="w-20 h-20 mx-auto rounded-full bg-yellow-100 flex items-center justify-center mb-5">
+                    <i class="fa-solid fa-wallet mb-3 text-4xl text-[#E5C85C]"></i>
 
-                <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-4xl"></i>
+                    <p class="text-lg font-semibold text-[#6A4B00]">
 
-            </div>
+                        No expenses yet
 
-            <h2 class="text-2xl font-bold text-[#4D3900]">
+                    </p>
 
-                Unsaved Changes
+                    <p class="mt-1 text-sm text-gray-500">
 
-            </h2>
+                        Start by adding your first expense.
 
-            <p class="text-gray-500 mt-3 mb-8">
+                    </p>
 
-                You have unsaved changes.<br>
-                Do you want to save before leaving?
+                </div>
 
-            </p>
+            </td>
 
-            <div class="flex justify-center gap-4">
+        </tr>
 
-                <button
-                    id="saveBeforeClose"
-                    class="px-7 py-3 rounded-xl bg-[#F5C000] font-semibold">
+    @endforelse
 
-                    Save Changes
+</tbody>
 
-                </button>
+</table>
 
-                <button
-                    onclick="discardChanges()"
-                    class="px-7 py-3 rounded-xl border">
+</div>
 
-                    Discard
+</div>
 
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-@push('scripts')
-
-<script>
-
-function openDeleteModal(action){
-
-    document.getElementById('deleteModal').classList.remove('hidden');
-    document.getElementById('deleteModal').classList.add('flex');
-
-    document.getElementById('deleteForm').action = action;
-
-}
-
-function closeDeleteModal(){
-
-    document.getElementById('deleteModal').classList.remove('flex');
-    document.getElementById('deleteModal').classList.add('hidden');
-
-}
-
-function openEditModal(action, description, amount, date, category, note){
-
-    document.getElementById('editModal').classList.remove('hidden');
-    document.getElementById('editModal').classList.add('flex');
-
-    document.getElementById('editForm').action = action;
-
-    document.getElementById('edit_description').value = description;
-    document.getElementById('edit_amount').value = amount;
-    document.getElementById('edit_date').value = date;
-    document.getElementById('edit_category').value = category;
-    document.getElementById('edit_note').value = note;
-
-}
-
-function closeEditModal(){
-
-    document.getElementById('editModal').classList.remove('flex');
-    document.getElementById('editModal').classList.add('hidden');
-
-}
-
-let formChanged = false;
-
-const editForm = document.getElementById('editForm');
-
-if (editForm) {
-
-    editForm.querySelectorAll('input, textarea, select').forEach(el => {
-
-        el.addEventListener('input', () => {
-
-            formChanged = true;
-
-        });
-
-    });
-
-}
-
-function closeEditModal() {
-
-    if (formChanged) {
-
-        document.getElementById('unsavedModal').classList.remove('hidden');
-        document.getElementById('unsavedModal').classList.add('flex');
-
-        return;
-
-    }
-
-    document.getElementById('editModal').classList.remove('flex');
-    document.getElementById('editModal').classList.add('hidden');
-
-}
-
-function discardChanges() {
-
-    formChanged = false;
-
-    document.getElementById('unsavedModal').classList.remove('flex');
-    document.getElementById('unsavedModal').classList.add('hidden');
-
-    document.getElementById('editModal').classList.remove('flex');
-    document.getElementById('editModal').classList.add('hidden');
-
-}
-
-document.getElementById('saveBeforeClose').addEventListener('click', function () {
-
-    formChanged = false;
-
-    editForm.submit();
-
-});
-</script>
-
-
-
-@endpush
+@include('livewire.expenses.modals.edit-expense')
+@include('livewire.expenses.modals.unsaved-add')
+@include('livewire.expenses.modals.unsaved-edit')
+@include('livewire.expenses.modals.delete-expense')

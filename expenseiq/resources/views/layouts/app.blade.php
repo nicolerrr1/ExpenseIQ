@@ -126,8 +126,12 @@
 
     {{-- Main Content --}}
     <main class="flex-1 px-8 py-6 overflow-y-auto max-w-[1400px] mx-auto">
-
-        @yield('content')
+        
+        @isset($slot)
+        {{ $slot }}
+        @else
+            @yield('content')
+        @endisset
 
     </main>
 
