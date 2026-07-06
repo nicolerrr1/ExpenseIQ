@@ -27,10 +27,11 @@
         </div>
 
         <form
-            action="{{ route('settings.password') }}"
+            action="{{ route('settings.password.update') }}"
             method="POST">
 
             @csrf
+            
 
             <div class="px-10 py-8 space-y-6">
 

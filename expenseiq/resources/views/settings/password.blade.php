@@ -32,8 +32,6 @@
             class="bg-white border border-[#E6B400] rounded-[36px] p-10 space-y-8">
 
             @csrf
-            @method('PUT')
-
             <div>
 
                 <label class="block font-bold text-[#5D4300] mb-2">

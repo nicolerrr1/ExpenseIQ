@@ -73,10 +73,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/danger', [SettingsController::class, 'danger'])
         ->name('settings.danger.page');
 
-    Route::put('/settings/profile', [SettingsController::class, 'updateProfile'])
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])
         ->name('settings.profile');
 
-    Route::put('/settings/password', [SettingsController::class, 'updatePassword'])
+    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])
         ->name('settings.password.update');
 
     Route::delete('/settings/clear-data', [SettingsController::class, 'clearData'])
