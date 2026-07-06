@@ -66,8 +66,7 @@ return redirect()->route('dashboard');
             'email' => 'required|email|unique:users,email',
 
             'password' => 'required|confirmed|min:8',
-
-            'terms' => 'accepted',
+// 
 
         ]);
 

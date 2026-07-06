@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ExpenseController;
+use App\Livewire\Expenses\Index;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ExportController;
@@ -47,6 +48,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    // Expense controller @index
+    Route::get('/expenses', Index::class)
+        ->name('expenses.index');
+
+    Route::post('/expenses', [ExpenseController::class, 'store'])
+        ->name('expenses.store');
+
+    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])
+        ->name('expenses.update');
+
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])
+        ->name('expenses.destroy');
+    // 
 
     Route::get('/budget', [BudgetController::class, 'index'])
         ->name('budget.index');
@@ -87,7 +101,5 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
-
-    Route::resource('expenses', ExpenseController::class);
 
 });

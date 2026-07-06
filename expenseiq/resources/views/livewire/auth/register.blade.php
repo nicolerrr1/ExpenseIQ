@@ -195,28 +195,6 @@
 
                 </div>
 
-                <div class="flex items-start mt-6">
-
-                    <input
-                        type="checkbox"
-                        name="terms"
-                        value="1"
-                        class="mt-1">
-
-                    <label class="ml-3 text-sm text-gray-600">
-
-                        I agree to the
-                        <span class="font-semibold">
-                            Terms of Service
-                        </span>
-                        and
-                        <span class="font-semibold">
-                            Privacy Policy
-                        </span>
-
-                    </label>
-
-                </div>
 
                 <button
                     type="submit"
