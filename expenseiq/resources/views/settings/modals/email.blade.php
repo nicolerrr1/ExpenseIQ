@@ -36,7 +36,7 @@
 
             <input
                 type="hidden"
-                name="first_name"
+                name="type"
                 value="email">
                 
             <!-- Body -->

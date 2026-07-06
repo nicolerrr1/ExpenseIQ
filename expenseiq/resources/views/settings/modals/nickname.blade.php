@@ -35,19 +35,41 @@
                 name="type"
                 value="nickname">
 
+            <!-- Body -->
 
-            <div class="flex justify-end gap-4 mt-8">
+            <div class="px-10 py-8">
+
+                <label class="block text-[#5D4300] font-bold mb-3">
+
+                    Nickname
+
+                </label>
+
+                <input
+                    type="text"
+                    name="nickname"
+                    value="{{ old('nickname', $user->nickname) }}"
+                    class="w-full border border-[#D6D6D6] rounded-2xl px-5 py-4 text-xl focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    required>
+
+            </div>
+
+            <!-- Footer -->
+
+            <div class="px-10 pb-8 flex justify-end gap-4">
 
                 <button
                     type="button"
-                    onclick="closeModal('nicknameModal')">
+                    onclick="closeModal('nicknameModal')"
+                    class="px-8 py-3 rounded-xl border border-gray-300 font-semibold hover:bg-gray-100">
 
                     Cancel
 
                 </button>
 
                 <button
-                    type="submit">
+                    type="submit"
+                    class="bg-[#F3C400] hover:bg-yellow-500 text-[#5D4300] font-bold px-8 py-3 rounded-xl">
 
                     Save Changes
 
