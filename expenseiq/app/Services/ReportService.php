@@ -20,16 +20,16 @@ class ReportService
 
         $expenses = Expense::with('category')
             ->where('user_id', $userId)
-            ->whereMonth('expense_date', 'all')
             ->whereYear('expense_date', $year);
 
         if ($month != 'all') {
             $expenses->whereMonth('expense_date', $month);
+        } else {
+            $expenses->whereMonth('expense_date', now()->month);
         }
 
         if ($category != 'all') {
             $expenses->where('category_id', $category);
-
         }
 
         $expenses = $expenses->get();
