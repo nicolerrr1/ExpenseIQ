@@ -38,7 +38,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         if (!Auth::user()->is_onboarded) {
-            return redirect()->route('dashboard');
+            return redirect()->route('welcome.step1');
         }
 
 return redirect()->route('dashboard');

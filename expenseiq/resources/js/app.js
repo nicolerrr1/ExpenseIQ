@@ -1,7 +1,10 @@
+console.log("PASSWORD JS LOADED");
 import '../css/app.css';
 import './bootstrap';
 
 import Chart from 'chart.js/auto';
+
+import './password-strength';
 
 window.Chart = Chart;
 
