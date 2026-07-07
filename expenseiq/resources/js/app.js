@@ -1,5 +1,6 @@
 import '../css/app.css';
 import './bootstrap';
+import './reports';
 
 import Chart from 'chart.js/auto';
 
