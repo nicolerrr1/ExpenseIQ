@@ -26,7 +26,7 @@ class Index extends Component
 
     public function mount(ReportService $reportService)
     {
-        $this->month = now()->month;
+        $this->month = 'all';
 
         $this->loadReport($reportService);
     }
@@ -34,11 +34,13 @@ class Index extends Component
     public function updatedMonth(ReportService $reportService)
     {
         $this->loadReport($reportService);
+    
     }
 
     public function updatedCategory(ReportService $reportService)
     {
         $this->loadReport($reportService);
+        
     }
 
     // =========================

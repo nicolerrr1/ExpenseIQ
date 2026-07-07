@@ -168,31 +168,11 @@
     <tr>
 
         <td class="label">
-
-            Total Budget
-
-        </td>
-
-        <td class="value">
-
-            ₱{{ number_format($report['totalBudget'],2) }}
-
-        </td>
-
-    </tr>
-
-    <tr>
-
-        <td class="label">
-
             Total Expenses
-
         </td>
 
         <td class="value">
-
             ₱{{ number_format($report['totalExpenses'],2) }}
-
         </td>
 
     </tr>
@@ -200,15 +180,11 @@
     <tr>
 
         <td class="label">
-
-            Remaining Budget
-
+            Total Transactions
         </td>
 
         <td class="value">
-
-            ₱{{ number_format($report['remainingBudget'],2) }}
-
+            {{ count($report['expenses']) }}
         </td>
 
     </tr>

@@ -19,14 +19,10 @@ class ExportController extends Controller
         $to = $request->to;
         $category = $request->category ?? 'all';
 
-        // Gagamitin natin ang month ng "From" date
-        $month = date('n', strtotime($from));
-        $year = date('Y', strtotime($from));
-
-        $report = $reportService->getMonthlyReport(
+        $report = $reportService->getReportByDateRange(
             Auth::id(),
-            $month,
-            $year,
+            $from,
+            $to,
             $category
         );
 
@@ -46,11 +42,8 @@ class ExportController extends Controller
             fputcsv($file, [
 
                 'Category',
-
                 'Description',
-
                 'Amount',
-
                 'Date',
 
             ]);
@@ -60,11 +53,8 @@ class ExportController extends Controller
                 fputcsv($file, [
 
                     $expense->category->category_name,
-
                     $expense->description,
-
                     $expense->amount,
-
                     $expense->expense_date,
 
                 ]);
@@ -85,13 +75,10 @@ class ExportController extends Controller
         $to = $request->to;
         $category = $request->category ?? 'all';
 
-        $month = date('n', strtotime($from));
-        $year = date('Y', strtotime($from));
-
-        $report = $reportService->getMonthlyReport(
+        $report = $reportService->getReportByDateRange(
             Auth::id(),
-            $month,
-            $year,
+            $from,
+            $to,
             $category
         );
 

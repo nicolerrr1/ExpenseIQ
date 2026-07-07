@@ -21,6 +21,10 @@
                 wire:model.live="month"
                 class="rounded-xl border border-gray-300 px-4 py-2 focus:border-[#F3C400] focus:outline-none">
 
+                <option value="all">
+                    All Months
+                </option>
+
                 @for ($m = 1; $m <= 12; $m++)
 
                     <option value="{{ $m }}">
@@ -72,69 +76,66 @@ function createReportChart(labels, data)
 
     if (!canvas) return;
 
-    if (!reportChart) {
+    // Destroy old chart
+    if (reportChart) {
+        reportChart.destroy();
+        reportChart = null;
+    }
 
-        reportChart = new Chart(canvas, {
+    reportChart = new Chart(canvas, {
 
-            type: 'line',
+        type: 'line',
 
-            data: {
+        data: {
 
-                labels: labels,
+            labels,
 
-                datasets: [{
+            datasets: [{
 
-                    label: 'Expenses',
+                label: 'Expenses',
 
-                    data: data,
+                data,
 
-                    borderColor: '#F3C400',
+                borderColor: '#F3C400',
 
-                    backgroundColor: 'rgba(243,196,0,.15)',
+                backgroundColor: 'rgba(243,196,0,.15)',
 
-                    fill: true,
+                fill: true,
 
-                    tension: .4,
+                tension: .4,
 
-                    borderWidth: 3,
+                borderWidth: 3,
 
-                    pointRadius: 5,
+                pointRadius: 5,
 
-                    pointBackgroundColor: '#F3C400'
+                pointBackgroundColor: '#F3C400'
 
-                }]
+            }]
 
-            },
+        },
 
-            options: {
+        options: {
 
-                responsive: true,
+            responsive: true,
 
-                maintainAspectRatio: false,
+            maintainAspectRatio: false,
 
-                plugins: {
+            animation: false,
 
-                    legend: {
+            plugins: {
 
-                        display: false
+                legend: {
 
-                    }
+                    display: false
 
                 }
 
             }
 
-        });
+        }
 
-    } else {
+    });
 
-        reportChart.data.labels = labels;
-
-        reportChart.data.datasets[0].data = data;
-
-        reportChart.update();
-
-    }
 }
 
 document.addEventListener('livewire:init', () => {
@@ -145,14 +146,10 @@ document.addEventListener('livewire:init', () => {
     );
 
     Livewire.on('report-chart-updated', (event) => {
-
-        const payload = event[0];
-
         createReportChart(
-            payload.labels,
-            payload.data
+            event.labels,
+            event.data
         );
-
     });
 
 });
