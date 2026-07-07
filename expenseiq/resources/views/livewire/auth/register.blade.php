@@ -270,9 +270,6 @@
 
                     <p id="confirm-message" class="mt-2 text-sm font-medium hidden"></p>
 
-                
-
-
                 <button
                     type="submit"
                     class="mt-8 w-full bg-[#B88900] hover:bg-[#9E7600] transition text-white font-bold py-4 rounded-xl">
