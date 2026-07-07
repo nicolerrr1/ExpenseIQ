@@ -46,6 +46,8 @@
     </div>
 
     {{-- Export Modal --}}
-    @include('livewire.reports.components.export-modal')
+    @if($showExportModal)
+        @include('livewire.reports.components.export-modal')
+    @endif
 
 </div>

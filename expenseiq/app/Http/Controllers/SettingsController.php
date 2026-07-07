@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Budget;
 use App\Models\Expense;
-use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -146,8 +145,6 @@ class SettingsController extends Controller
 
         Budget::where('user_id', $userId)->delete();
 
-        Report::where('user_id', $userId)->delete();
-
         return redirect()
             ->route('settings')
             ->with('success', 'All data has been deleted.');
@@ -163,8 +160,6 @@ class SettingsController extends Controller
         Expense::where('user_id', $user->id)->delete();
 
         Budget::where('user_id', $user->id)->delete();
-
-        Report::where('user_id', $user->id)->delete();
 
         Auth::logout();
 
