@@ -1,54 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Reports</title>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-</head>
-<body>
+<div class="space-y-6">
 
-    <a href="{{ route('reports.export.csv') }}"
-       class="bg-green-600 text-white px-4 py-2 rounded">
-        Export CSV
-    </a>
+    {{-- Header --}}
+    <div class="flex items-start justify-between">
 
-    <hr>
+        <div>
 
-    <h1>Monthly Report</h1>
+            <h1 class="text-[48px] font-extrabold text-[#4D3900] leading-none">
+                Report
+            </h1>
 
-    <hr>
+            <p class="text-[#6C6C6C] text-lg mt-2">
+                Overall Report Overview
+            </p>
 
-    <p>
-        <strong>Total Budget:</strong>
-        ₱{{ number_format($report['totalBudget'], 2) }}
-    </p>
+        </div>
 
-    <p>
-        <strong>Total Expenses:</strong>
-        ₱{{ number_format($report['totalExpenses'], 2) }}
-    </p>
+        <button
+            wire:click="openExportModal"
+            class="w-48 h-16 rounded-2xl border-2 border-black bg-white
+                   text-3xl font-bold hover:bg-gray-50 transition">
 
-    <p>
-        <strong>Remaining Budget:</strong>
-        ₱{{ number_format($report['remainingBudget'], 2) }}
-    </p>
+            Export
 
-    <hr>
+        </button>
 
-    <h2>Category Summary</h2>
+    </div>
 
-    @forelse($report['categorySummary'] as $category => $amount)
+    {{-- Summary Cards --}}
+    @include('livewire.reports.components.summary-cards')
 
-        <p>
-            {{ $category }} —
-            ₱{{ number_format($amount,2) }}
-        </p>
+    {{-- Spending Chart --}}
+    @include('livewire.reports.components.spending-chart')
 
-    @empty
+    {{-- Bottom Section --}}
+    <div class="grid grid-cols-12 gap-6">
 
-        <p>No expenses found.</p>
+        <div class="col-span-6">
+            @include('livewire.reports.components.top-categories')
+        </div>
 
-    @endforelse
+        <div class="col-span-6">
+            @include('livewire.reports.components.month-comparison')
+        </div>
 
-</body>
-</html>
+    </div>
+
+    {{-- Export Modal --}}
+    @include('livewire.reports.components.export-modal')
+
+</div>

@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ExpenseController;
-use App\Livewire\Expenses\Index;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SettingsController;
+
+// Livewire
+use App\Livewire\Expenses\Index;
+use App\Livewire\Reports\Index as ReportIndex;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
@@ -26,6 +28,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+  
+    //  Onboarding
+  
 
     Route::get('/welcome', [OnboardingController::class, 'step1'])
         ->name('welcome.step1');
@@ -45,10 +51,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/welcome/finish', [OnboardingController::class, 'finish'])
         ->name('welcome.finish');
 
+   
+    //  Dashboard
+ 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    // Expense controller @index
+   
+    //  Expenses (Livewire)
+
+
     Route::get('/expenses', Index::class)
         ->name('expenses.index');
 
@@ -60,24 +72,26 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])
         ->name('expenses.destroy');
-    // 
 
+    //  Budget
+   
     Route::get('/budget', [BudgetController::class, 'index'])
         ->name('budget.index');
 
     Route::post('/budget/save', [BudgetController::class, 'save'])
         ->name('budget.save');
 
-    //report
 
-    Route::get('/reports', [ReportController::class,'index'])
+    //  Reports (Livewire)
+  
+    Route::get('/reports', ReportIndex::class)
         ->name('reports.index');
 
     Route::get('/reports/export/csv', [ExportController::class, 'csv'])
         ->name('reports.export.csv');
 
-    //settings
-
+    //  Settings
+ 
     Route::get('/settings', [SettingsController::class, 'index'])
         ->name('settings');
 
@@ -99,7 +113,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/delete-account', [SettingsController::class, 'deleteAccount'])
         ->name('settings.delete');
 
+    // Logout
+
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
-
 });

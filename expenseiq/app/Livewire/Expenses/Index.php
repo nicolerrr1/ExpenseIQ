@@ -9,24 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    // =========================
+
     // Form Fields
-    // =========================
+
     public $category_id = '';
     public $description = '';
     public $amount = '';
     public $expense_date = '';
     public $notes = '';
 
-    // =========================
+
     // IDs
-    // =========================
+
     public $editingExpenseId = null;
     public $deleteExpenseId = null;
 
-    // =========================
+   
     // Modal States
-    // =========================
+ 
     public $showEditModal = false;
     public $showDeleteModal = false;
     public $showUnsavedModal = false;
@@ -48,11 +48,9 @@ class Index extends Component
         ];
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE
-    |--------------------------------------------------------------------------
-    */
+  
+    //  CREATE
+   
 
     public function saveExpense()
     {
@@ -72,11 +70,9 @@ class Index extends Component
         $this->resetForm();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | EDIT
-    |--------------------------------------------------------------------------
-    */
+  
+    //  EDIT
+
 
     public function editExpense($id)
     {
@@ -134,11 +130,9 @@ class Index extends Component
         $this->resetForm();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DELETE
-    |--------------------------------------------------------------------------
-    */
+  
+    //  DELETE
+  
 
     public function confirmDelete($id)
     {
@@ -158,11 +152,9 @@ class Index extends Component
         session()->flash('success', 'Expense deleted successfully.');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | UNSAVED MODALS
-    |--------------------------------------------------------------------------
-    */
+    
+    //  UNSAVED MODALS
+ 
 
     public function closeUnsavedModal()
     {
@@ -175,11 +167,9 @@ class Index extends Component
         $this->deleteExpenseId = null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RESET FORM
-    |--------------------------------------------------------------------------
-    */
+    
+    //  RESET FORM
+   
 
     private function resetForm()
     {
@@ -198,11 +188,9 @@ class Index extends Component
         $this->showEditUnsavedModal = false;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RENDER
-    |--------------------------------------------------------------------------
-    */
+   
+    //  RENDER
+   
 
     public function render()
     {

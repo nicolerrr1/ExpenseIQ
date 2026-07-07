@@ -2,19 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ReportService;
-use Illuminate\Support\Facades\Auth;
-
 class ReportController extends Controller
 {
-    public function index(ReportService $reportService)
+    public function index()
     {
-        $report = $reportService->getMonthlyReport(
-            Auth::id(),
-            now()->month,
-            now()->year
-        );
-
-        return view('reports.index', compact('report'));
+        return view('reports.index');
     }
 }
