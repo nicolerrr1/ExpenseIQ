@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             ['category_name' => 'Housing'],
-            ['category_name' => 'Food and Drinks'],
+            ['category_name' => 'Food & Drinks'],
             ['category_name' => 'Grocery'],
             ['category_name' => 'Transportation'],
             ['category_name' => 'Health'],
