@@ -254,7 +254,6 @@
                     <div class="relative mt-2">
 
                         <input
-                            id="confirm-password"
                             data-confirm-password
                             type="password"
                             name="password_confirmation"
