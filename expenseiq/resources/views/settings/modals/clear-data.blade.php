@@ -1,78 +1,68 @@
-<!-- Clear Data Modal -->
-
 <div
     id="clearDataModal"
-    class="expenseiq-modal hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    class="hidden fixed inset-0 bg-[#00000066] flex items-center justify-center z-50">
 
-    <div class="w-[600px] bg-white rounded-[36px] border border-[#E6B400] overflow-hidden">
+    <div class="w-[810px] rounded-[40px] bg-white border-[4px] border-[#D81B47] px-14 py-12">
 
-        <!-- Header -->
+        <div class="flex justify-center">
 
-        <div class="px-10 py-7 border-b border-[#E6B400]">
+            <div class="w-24 h-24 rounded-full bg-[#FFD9DF] flex items-center justify-center">
 
-            <h2 class="text-[34px] font-extrabold text-[#B3123A]">
+                <i class="fa-solid fa-trash text-[#A31237] text-5xl"></i>
 
-                Clear All Data
-
-            </h2>
+            </div>
 
         </div>
 
-        <!-- Body -->
+        <h2 class="mt-8 text-center text-[54px] font-extrabold text-[#5D4300]">
 
-        <div class="px-10 py-8">
+            Clear all data?
 
-            <p class="text-lg text-[#5D4300] leading-relaxed">
+        </h2>
 
-                This will permanently delete all of your:
+        <p class="mt-5 text-center text-[28px] leading-relaxed text-[#B9A36A]">
 
-            </p>
+            All expenses, budgets, and reports will be
 
-            <ul class="list-disc ml-8 mt-4 text-[#5D4300] space-y-2">
+            <span class="font-bold">
+                permanently deleted.
+            </span>
 
-                <li>Expenses</li>
+            Your account stays active.
 
-                <li>Budgets</li>
+            <br>
 
-                <li>Reports</li>
+            This cannot be undone.
 
-            </ul>
+        </p>
 
-            <p class="mt-6 text-red-600 font-bold">
-
-                This action cannot be undone.
-
-            </p>
-
-        </div>
-
-        <!-- Footer -->
-
-        <div class="px-10 pb-8 flex justify-end gap-4">
-
-            <button
-                type="button"
-                onclick="closeModal('clearDataModal')"
-                class="px-8 py-3 border rounded-xl hover:bg-gray-100">
-
-                Cancel
-
-            </button>
+        <div class="mt-12 flex justify-center gap-8">
 
             <form
-                action="{{ route('settings.clear') }}"
+                action="{{ route('settings.clear-data') }}"
                 method="POST">
 
                 @csrf
+                @method('DELETE')
 
                 <button
-                    class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold">
+                    type="submit"
+                    class="w-[260px] h-[78px] rounded-2xl border-2 border-black text-[24px] font-bold hover:bg-red-50 transition">
 
-                    Delete Everything
+                    Yes, clear all
 
                 </button>
 
             </form>
+
+            <button
+                type="button"
+                onclick="closeModal('clearDataModal')"
+                class="w-[260px] h-[78px] rounded-2xl border-2 border-black text-[24px] font-bold hover:bg-gray-100 transition">
+
+                Cancel
+
+            </button>
 
         </div>
 

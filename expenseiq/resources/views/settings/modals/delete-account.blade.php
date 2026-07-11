@@ -1,65 +1,49 @@
-<!-- Delete Account Modal -->
-
 <div
     id="deleteAccountModal"
-    class="expenseiq-modal hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    class="hidden fixed inset-0 bg-[#00000066] flex items-center justify-center z-50">
 
-    <div class="w-[600px] bg-white rounded-[36px] border border-[#E6B400] overflow-hidden">
+    <div class="w-[820px] rounded-[40px] bg-white border-[4px] border-[#D81B47] px-14 py-12">
 
-        <!-- Header -->
+        <div class="flex justify-center">
 
-        <div class="px-10 py-7 border-b border-[#E6B400]">
+            <div class="w-24 h-24 rounded-full bg-[#FFD9DF] flex items-center justify-center">
 
-            <h2 class="text-[34px] font-extrabold text-[#B3123A]">
+                <i class="fa-solid fa-user-minus text-[#A31237] text-5xl"></i>
 
-                Delete Account
-
-            </h2>
+            </div>
 
         </div>
 
-        <!-- Body -->
+        <h2 class="mt-8 text-center text-[52px] font-extrabold text-[#5D4300]">
 
-        <div class="px-10 py-8">
+            Delete your account?
 
-            <p class="text-lg text-[#5D4300] leading-relaxed">
+        </h2>
 
-                Deleting your account will permanently remove:
+        <p class="mt-5 text-center text-[26px] leading-relaxed text-[#B9A36A]">
 
-            </p>
+            This will permanently delete your account and all data.
 
-            <ul class="list-disc ml-8 mt-4 text-[#5D4300] space-y-2">
+            You will be logged out immediately.
 
-                <li>Your account</li>
+        </p>
 
-                <li>Expenses</li>
+        <div class="mt-10">
 
-                <li>Budgets</li>
+            <label class="block text-[22px] font-bold text-[#5D4300] mb-3">
 
-                <li>Reports</li>
+                TYPE "DELETE" TO CONFIRM
 
-            </ul>
+            </label>
 
-            <p class="mt-6 text-red-600 font-bold">
-
-                This action cannot be undone.
-
-            </p>
+            <input
+                id="delete-confirm-input"
+                type="text"
+                class="w-full h-16 rounded-2xl border border-gray-300 px-5 text-xl focus:outline-none focus:ring-2 focus:ring-red-400">
 
         </div>
 
-        <!-- Footer -->
-
-        <div class="px-10 pb-8 flex justify-end gap-4">
-
-            <button
-                type="button"
-                onclick="closeModal('deleteAccountModal')"
-                class="px-8 py-3 border rounded-xl hover:bg-gray-100">
-
-                Cancel
-
-            </button>
+        <div class="mt-10 flex justify-center gap-8">
 
             <form
                 action="{{ route('settings.delete') }}"
@@ -69,13 +53,24 @@
                 @method('DELETE')
 
                 <button
-                    class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold">
+                    id="delete-account-button"
+                    disabled
+                    class="w-[260px] h-[78px] rounded-2xl border-2 border-black text-[24px] font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-50 transition">
 
-                    Delete Account
+                    Delete account
 
                 </button>
 
             </form>
+
+            <button
+                type="button"
+                onclick="closeModal('deleteAccountModal')"
+                class="w-[260px] h-[78px] rounded-2xl border-2 border-black text-[24px] font-bold hover:bg-gray-100 transition">
+
+                Cancel
+
+            </button>
 
         </div>
 

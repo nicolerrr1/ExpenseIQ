@@ -35,7 +35,8 @@
 
                     <button
                         type="button"
-                        class="mt-8 px-10 py-4 rounded-xl border-2 border-black font-bold text-xl">
+                        onclick="openModal('clearDataModal')"
+                        class="mt-8 px-10 py-4 rounded-xl border-2 border-black font-bold text-xl hover:bg-[#FFF3F5] transition">
 
                         Clear all data
 
@@ -72,7 +73,8 @@
 
                     <button
                         type="button"
-                        class="mt-8 px-10 py-4 rounded-xl border-2 border-black font-bold text-xl">
+                        onclick="openModal('deleteAccountModal')"
+                        class="mt-8 px-10 py-4 rounded-xl border-2 border-black font-bold text-xl hover:bg-[#FFF3F5] transition">
 
                         Delete my account
 

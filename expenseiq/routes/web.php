@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])
         ->name('settings.password.update');
     Route::delete('/settings/clear-data', [SettingsController::class, 'clearData'])
-        ->name('settings.clear');
+        ->name('settings.clear-data');
     Route::delete('/settings/delete-account', [SettingsController::class, 'deleteAccount'])
         ->name('settings.delete');
 
