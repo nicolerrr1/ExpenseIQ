@@ -114,7 +114,10 @@
 
             @endif
 
-            <form action="{{ route('register.store') }}" method="POST">
+            <form 
+                action="{{ route('register.store') }}" 
+                method="POST"
+                autocomplete="off">
 
                 @csrf
 
@@ -162,6 +165,7 @@
                         type="email"
                         name="email"
                         value="{{ old('email') }}"
+                        autocomplete="new-email"
                         class="mt-2 w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-yellow-500 outline-none"
                         required>
 
@@ -177,14 +181,17 @@
 
                         <input
                             id="password"
+                            data-password
                             type="password"
                             name="password"
+                            autocomplete="new-password"
                             class="w-full border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-yellow-500 outline-none"
                             required>
 
                         <button
                             type="button"
                             id="toggle-password"
+                            data-toggle-password
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#B88900]">
 
                             <i id="password-icon" class="fa-solid fa-eye"></i>
@@ -248,14 +255,17 @@
 
                         <input
                             id="confirm-password"
+                            data-confirm-password
                             type="password"
                             name="password_confirmation"
+                            autocomplete="new-password"
                             class="w-full border rounded-xl px-4 py-3 pr-12 focus:ring-2 focus:ring-yellow-500 outline-none"
                             required>
 
                         <button
                             type="button"
                             id="toggle-confirm-password"
+                            data-toggle-confirm-password
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#B88900]">
 
                             <i id="confirm-password-icon" class="fa-solid fa-eye"></i>
@@ -263,8 +273,6 @@
                         </button>
 
                     </div>
-
-                    <p id="confirm-message" class="mt-2 text-sm font-medium hidden"></p>
 
                 </div>
 

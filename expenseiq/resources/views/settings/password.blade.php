@@ -32,6 +32,9 @@
             class="bg-white border border-[#E6B400] rounded-[36px] p-10 space-y-8">
 
             @csrf
+
+            <!-- Current Password -->
+
             <div>
 
                 <label class="block font-bold text-[#5D4300] mb-2">
@@ -45,18 +48,87 @@
 
             </div>
 
+            <!-- New Password -->
+
             <div>
 
                 <label class="block font-bold text-[#5D4300] mb-2">
                     New Password
                 </label>
 
-                <input
-                    type="password"
-                    name="password"
-                    class="w-full rounded-xl border border-gray-300 px-5 py-4">
+                <div class="relative">
+
+                    <input
+                        id="settings-password"
+                        data-password
+                        type="password"
+                        name="password"
+                        class="w-full rounded-xl border border-gray-300 px-5 py-4 pr-12">
+
+                    <button
+                        type="button"
+                        data-toggle-password
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#B88900]">
+
+                        <i id="password-icon" class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+                <!-- Password Strength -->
+
+                <div id="password-strength-box" class="mt-4">
+
+                    <p class="text-sm font-semibold">
+
+                        Strength:
+
+                        <span id="strength-text" class="text-red-600">
+
+                            Weak
+
+                        </span>
+
+                    </p>
+
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+
+                        <div
+                            id="strength-bar"
+                            class="bg-red-500 h-2 rounded-full transition-all duration-300"
+                            style="width:0%">
+                        </div>
+
+                    </div>
+
+                    <ul
+                        id="password-rules"
+                        class="mt-3 text-sm text-gray-600 space-y-1">
+
+                        <li id="rule-length">
+                            • At least 8 characters
+                        </li>
+
+                        <li id="rule-upper">
+                            • One uppercase letter
+                        </li>
+
+                        <li id="rule-number">
+                            • One number
+                        </li>
+
+                        <li id="rule-symbol">
+                            • One special character
+                        </li>
+
+                    </ul>
+
+                </div>
 
             </div>
+
+            <!-- Confirm Password -->
 
             <div>
 
@@ -64,10 +136,31 @@
                     Confirm Password
                 </label>
 
-                <input
-                    type="password"
-                    name="password_confirmation"
-                    class="w-full rounded-xl border border-gray-300 px-5 py-4">
+                <div class="relative">
+
+                    <input
+                        id="settings-confirm-password"
+                        data-confirm-password
+                        type="password"
+                        name="password_confirmation"
+                        class="w-full rounded-xl border border-gray-300 px-5 py-4 pr-12">
+
+                    <button
+                        type="button"
+                        data-toggle-confirm-password
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#B88900]">
+
+                        <i id="confirm-password-icon" class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+                <p
+                    id="confirm-message"
+                    class="mt-2 text-sm font-medium hidden">
+
+                </p>
 
             </div>
 

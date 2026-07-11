@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const password = document.getElementById('password');
+    // ============================
+    // Elements
+    // ============================
+
+    const password = document.querySelector('[data-password]');
+    const confirmPassword = document.querySelector('[data-confirm-password]');
 
     if (!password) return;
 
@@ -13,6 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const numberRule = document.getElementById('rule-number');
     const symbolRule = document.getElementById('rule-symbol');
 
+    const confirmMessage = document.getElementById('confirm-message');
+
+    const togglePassword = document.querySelector('[data-toggle-password]');
+    const passwordIcon = document.getElementById('password-icon');
+
+    const toggleConfirmPassword = document.querySelector('[data-toggle-confirm-password]');
+    const confirmPasswordIcon = document.getElementById('confirm-password-icon');
+
+    // ============================
+    // Password Strength
+    // ============================
+
     password.addEventListener('input', () => {
 
         const value = password.value;
@@ -24,141 +41,150 @@ document.addEventListener('DOMContentLoaded', () => {
         const hasNumber = /\d/.test(value);
         const hasSymbol = /[^A-Za-z0-9]/.test(value);
 
-        lengthRule.style.display = hasLength ? 'none' : 'list-item';
-        upperRule.style.display = hasUpper ? 'none' : 'list-item';
-        numberRule.style.display = hasNumber ? 'none' : 'list-item';
-        symbolRule.style.display = hasSymbol ? 'none' : 'list-item';
+        if (lengthRule) {
+            lengthRule.style.display = hasLength ? 'none' : 'list-item';
+        }
+
+        if (upperRule) {
+            upperRule.style.display = hasUpper ? 'none' : 'list-item';
+        }
+
+        if (numberRule) {
+            numberRule.style.display = hasNumber ? 'none' : 'list-item';
+        }
+
+        if (symbolRule) {
+            symbolRule.style.display = hasSymbol ? 'none' : 'list-item';
+        }
 
         if (hasLength) score++;
         if (hasUpper) score++;
         if (hasNumber) score++;
         if (hasSymbol) score++;
 
-        if (score <= 1) {
+        if (bar && text) {
 
-            text.innerHTML = "Weak";
-            text.className = "text-red-600";
+            if (score <= 1) {
 
-            bar.style.width = "25%";
-            bar.className = "bg-red-500 h-2 rounded-full transition-all duration-300";
+                text.textContent = "Weak";
+                text.className = "text-red-600";
 
-        } else if (score <= 3) {
+                bar.style.width = "25%";
+                bar.className = "bg-red-500 h-2 rounded-full transition-all duration-300";
 
-            text.innerHTML = "Medium";
-            text.className = "text-yellow-600";
+            }
+            else if (score <= 3) {
 
-            bar.style.width = "65%";
-            bar.className = "bg-yellow-500 h-2 rounded-full transition-all duration-300";
+                text.textContent = "Medium";
+                text.className = "text-yellow-600";
 
-        } else {
+                bar.style.width = "65%";
+                bar.className = "bg-yellow-500 h-2 rounded-full transition-all duration-300";
 
-            text.innerHTML = "Strong";
-            text.className = "text-green-600";
+            }
+            else {
 
-            bar.style.width = "100%";
-            bar.className = "bg-green-500 h-2 rounded-full transition-all duration-300";
+                text.textContent = "Strong";
+                text.className = "text-green-600";
 
-        }
-
-        if (score === 4) {
-
-            rules.style.display = "none";
-
-        } else {
-
-            rules.style.display = "block";
-
-        }
-
-        if (confirmPassword && confirmPassword.value.length > 0) {
-
-            if (password.value === confirmPassword.value) {
-
-                confirmMessage.textContent = "✔ Passwords match";
-                confirmMessage.className =
-                    "mt-2 text-sm font-medium text-green-600";
-
-            } else {
-
-                confirmMessage.textContent = "✖ Passwords do not match";
-                confirmMessage.className =
-                    "mt-2 text-sm font-medium text-red-600";
+                bar.style.width = "100%";
+                bar.className = "bg-green-500 h-2 rounded-full transition-all duration-300";
 
             }
 
         }
+
+        if (rules) {
+
+            rules.style.display = score === 4 ? "none" : "block";
+
+        }
+
+        updateConfirmMessage();
 
     });
-    const confirmPassword = document.getElementById('confirm-password');
-    const confirmMessage = document.getElementById('confirm-message');
 
-    if (confirmPassword) {
+    // ============================
+    // Confirm Password
+    // ============================
 
-        confirmPassword.addEventListener('input', () => {
+    function updateConfirmMessage() {
 
-            if (confirmPassword.value.length === 0) {
+        if (!confirmPassword || !confirmMessage) return;
 
-                confirmMessage.classList.add('hidden');
-                return;
+        if (confirmPassword.value.length === 0) {
 
-            }
+            confirmMessage.classList.add('hidden');
+            return;
 
-            confirmMessage.classList.remove('hidden');
+        }
 
-            if (password.value === confirmPassword.value) {
+        confirmMessage.classList.remove('hidden');
 
-                confirmMessage.textContent = "✔ Passwords match";
-                confirmMessage.className =
-                    "mt-2 text-sm font-medium text-green-600";
+        if (password.value === confirmPassword.value) {
 
-            } else {
+            confirmMessage.textContent = "✔ Passwords match";
+            confirmMessage.className =
+                "mt-2 text-sm font-medium text-green-600";
 
-                confirmMessage.textContent = "✖ Passwords do not match";
-                confirmMessage.className =
-                    "mt-2 text-sm font-medium text-red-600";
+        } else {
 
-            }
+            confirmMessage.textContent = "✖ Passwords do not match";
+            confirmMessage.className =
+                "mt-2 text-sm font-medium text-red-600";
 
-        });
+        }
 
     }
 
+    if (confirmPassword) {
+
+        confirmPassword.addEventListener('input', updateConfirmMessage);
+
+    }
+
+    // ============================
     // Show / Hide Password
-    const togglePassword = document.getElementById('toggle-password');
-    const passwordIcon = document.getElementById('password-icon');
+    // ============================
 
     if (togglePassword) {
 
         togglePassword.addEventListener('click', () => {
 
-            const isHidden = password.type === 'password';
+            const hidden = password.type === "password";
 
-            password.type = isHidden ? 'text' : 'password';
+            password.type = hidden ? "text" : "password";
 
-            passwordIcon.className = isHidden
-                ? 'fa-solid fa-eye-slash'
-                : 'fa-solid fa-eye';
+            if (passwordIcon) {
+
+                passwordIcon.className = hidden
+                    ? "fa-solid fa-eye-slash"
+                    : "fa-solid fa-eye";
+
+            }
 
         });
 
     }
 
-    const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-    const confirmPasswordIcon = document.getElementById('confirm-password-icon');
-
-    if (toggleConfirmPassword) {
+    if (toggleConfirmPassword && confirmPassword) {
 
         toggleConfirmPassword.addEventListener('click', () => {
 
-            const isHidden = confirmPassword.type === 'password';
+            const hidden = confirmPassword.type === "password";
 
-            confirmPassword.type = isHidden ? 'text' : 'password';
+            confirmPassword.type = hidden ? "text" : "password";
 
-            confirmPasswordIcon.className = isHidden
-                ? 'fa-solid fa-eye-slash'
-                : 'fa-solid fa-eye';
+            if (confirmPasswordIcon) {
+
+                confirmPasswordIcon.className = hidden
+                    ? "fa-solid fa-eye-slash"
+                    : "fa-solid fa-eye";
+
+            }
 
         });
 
     }
+
 });
